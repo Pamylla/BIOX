@@ -96,6 +96,7 @@ Naming: `FR-##`. Priority: **P0** (MVP does not exist without it), **P1** (MVP i
 | FR-21 | Timeline shows the evolution of each marker across dates | P0 |
 | FR-22 | System calculates trend (linear regression) and percentage variation per marker | P1 |
 | FR-23 | System compares two versions (batches) showing what changed | P2 |
+| FR-29 | Every calculation must be reproducible using the original measurements and the score version | P0 |
 
 ### Explanatory AI
 
