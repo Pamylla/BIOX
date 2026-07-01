@@ -13,6 +13,7 @@ A health-intelligence platform that turns laboratory results into an evolving, e
 - **Typing & style:** TypeScript with strong types; prefer small, pure, self-documenting functions and meaningful names over magic numbers.
 - **AI boundary:** AI explains, summarizes, and correlates results — it must NEVER calculate medical scores. Deterministic/medical calculations live in code, kept separate from AI interpretations.
 - **UX target:** clean, calm, minimal, spacious — modeled on Linear, Notion, and Stripe.
+- **Commits:** Conventional Commits — `type(scope): description` in English, imperative mood, lowercase (e.g. `docs(project): redefine project vision and engineering goals`). Types: `feat`, `fix`, `docs`, `refactor`, `test`, `chore`, `build`, `ci`.
 
 ## Modules (planned)
 
