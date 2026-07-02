@@ -1,6 +1,6 @@
 # Vision — BIOX
 
-**Document:** `docs/vision.md`
+**Document:** `docs/01-product/vision.md`
 **Related:** [`product-requirements.md`](product-requirements.md) (what), [`roadmap.md`](roadmap.md) (when)
 
 ---

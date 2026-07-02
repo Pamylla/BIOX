@@ -2,9 +2,9 @@
 
 | | |
 |---|---|
-| **Document** | `docs/product-requirements.md` |
+| **Document** | `docs/01-product/product-requirements.md` |
 | **Status** | MVP |
-| **Source of truth** | [`.biox/project.md`](../.biox/project.md) (vision & engineering goals) |
+| **Source of truth** | [`.biox/project.md`](../../.biox/project.md) (vision & engineering goals) |
 | **Related** | Domain model, data model and biomarker catalog docs will be added as the project evolves |
 
 ---
@@ -171,7 +171,7 @@ The MVP is ready when a user can, end to end:
 
 ## 9. References
 
-- [`.biox/project.md`](../.biox/project.md) — product and architecture source of truth.
+- [`.biox/project.md`](../../.biox/project.md) — product and architecture source of truth.
 - Biomarker catalog — the ~22 markers, domains, clinical direction, parser synonyms *(to be added)*.
 - Domain model — entities, relationships, rules *(to be added)*.
 - Data model — detailed schemas and design principles *(to be added)*.
