@@ -34,7 +34,7 @@ Not the `Patient`'s responsibility: authentication and access control (that's `U
 - **Age is derived from the date of birth**, never stored as a number — otherwise it goes stale.
 - **Conditions and medications are context for the AI, nothing more** in the MVP. They do not activate clinical protocols (the Protocol Engine is post-MVP). Example: a declared anti-inflammatory tells the AI that CRP may be suppressed — but it does not change the `Score` computation.
 - **Explicit LGPD consent** for processing sensitive data is mandatory and recorded with a date (health data is sensitive — LGPD art. 11).
-- **Cascading soft-delete:** deleting a `Patient` marks all linked clinical data as deleted, in cascade — never silently and irreversibly erased.
+- **Cascading soft-delete (within an active account).** Deleting a `Patient`'s data marks all linked clinical data as deleted, in cascade — reversible, never a silent edit. This is distinct from **account deletion** (FR-06), which performs an irreversible hard purge of all the account's data (LGPD right to erasure). The two delete semantics — reversible in-account soft-delete vs. account-level hard purge — and the purge mechanism are detailed in `03-architecture/data-model.md`.
 
 ## Future evolution
 

@@ -117,7 +117,7 @@ Naming: `FR-##`. Priority: **P0** (MVP does not exist without it), **P1** (MVP i
 | NFR-01 | **Privacy (LGPD)** | Exam data is sensitive (art. 11): explicit consent, real data deletion, anonymization before the LLM |
 | NFR-02 | **Traceability** | Every AI interpretation records which data it was based on and which model generated it |
 | NFR-03 | **Score reproducibility** | Formula is versioned; old scores remain reproducible after a formula change |
-| NFR-04 | **Non-destructiveness** | Deletion is soft-delete; exam correction is a new record, never a silent edit |
+| NFR-04 | **Non-destructiveness** | In-account deletion is soft-delete and a correction is a new record, never a silent edit. Account deletion (FR-06) is different: an irreversible hard purge of all the account's data (LGPD right to erasure), detailed in `03-architecture/data-model.md` |
 | NFR-05 | **Honest reading** | Where an exam has a known clinical limitation, the UI does not present "no changes" as "all good" — it flags the limitation |
 | NFR-06 | **Parsing performance** | Extraction runs in an asynchronous process (job/worker); it does not block the UI or hit timeouts |
 | NFR-07 | **Responsiveness** | Dashboard and timeline are usable on mobile |
