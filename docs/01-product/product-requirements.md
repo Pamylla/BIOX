@@ -159,11 +159,14 @@ The MVP is ready when a user can, end to end:
 - One user = one patient in the MVP.
 - ~22 biomarkers cover most initial check-ups (see biomarker catalog, to be documented).
 
+**Resolved.**
+
+- Weight modeling: weight is an anthropometric `Measurement` — a flag on the `Biomarker`, not a dedicated table — so it inherits timeline, trend and deltas like lab markers. See [domain/patient.md](../02-domain/patient.md).
+
 **Open decisions** (recorded, not blocking this PRD):
 
 - Per-domain weights in the overall score (MVP: simple versioned mean).
 - Score saturation curve per marker.
-- Weight: dedicated `measurements` table vs anthropometric Result.
 - Triglycerides: primary Metabolic confirmed (secondary Cardiovascular).
 - Security NFRs (encryption in transit/at rest, access control) to be detailed later in the project.
 
