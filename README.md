@@ -17,8 +17,8 @@ Instead of showing isolated laboratory values, BIOX helps users understand the *
 - 📈 **Historical timeline** — every exam becomes part of an evolving health history
 - 🔬 **Biomarker tracking** — trends and relationships between biomarkers over time
 - 🧮 **Deterministic scores** — medical scores calculated by code, never by AI
-- 🤖 **AI-assisted explanations** — natural-language summaries grounded with RAG
-- 📄 **Document processing** — OCR-based extraction from laboratory reports
+- 🤖 **AI-assisted explanations** — natural-language summaries grounded in curated medical knowledge (RAG post-MVP)
+- 📄 **Document processing** — parser-based extraction from lab report PDFs (OCR post-MVP)
 
 ## Engineering principles
 
@@ -33,21 +33,23 @@ Instead of showing isolated laboratory values, BIOX helps users understand the *
 | Layer | Technology |
 |---|---|
 | Frontend | React, Next.js, TypeScript |
-| Backend | NestJS, TypeScript |
+| Backend | NestJS or Next.js Route Handlers + worker (ADR-007), TypeScript |
 | Database | PostgreSQL, Prisma ORM |
-| Auth | Firebase Authentication |
-| AI | LLM integration, Prompt Engineering, RAG, Vector Search |
-| Documents | OCR pipeline |
+| Auth & Storage | Firebase |
+| AI | LLM integration, Prompt Engineering (RAG & Vector Search post-MVP) |
+| Documents | PDF parser (OCR post-MVP) |
 | Delivery | Docker, CI/CD |
 
 ## Project structure
 
 ```
 BIOX/
-├── .biox/          # Product & architecture source of truth
+├── .biox/                 # Product & architecture source of truth
 │   └── project.md
-├── docs/           # Product and engineering documentation
-│   └── product-requirements.md
+├── docs/
+│   ├── 01-product/        # Vision, product requirements, roadmap
+│   ├── 02-domain/         # Domain model (DDD ubiquitous language)
+│   └── 03-architecture/   # Architecture docs + ADRs
 ├── README.md
 ├── LICENSE
 └── .gitignore

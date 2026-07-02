@@ -2,9 +2,9 @@
 
 | | |
 |---|---|
-| **Document** | `docs/product-requirements.md` |
+| **Document** | `docs/01-product/product-requirements.md` |
 | **Status** | MVP |
-| **Source of truth** | [`.biox/project.md`](../.biox/project.md) (vision & engineering goals) |
+| **Source of truth** | [`.biox/project.md`](../../.biox/project.md) (vision & engineering goals) |
 | **Related** | Domain model, data model and biomarker catalog docs will be added as the project evolves |
 
 ---
@@ -117,7 +117,7 @@ Naming: `FR-##`. Priority: **P0** (MVP does not exist without it), **P1** (MVP i
 | NFR-01 | **Privacy (LGPD)** | Exam data is sensitive (art. 11): explicit consent, real data deletion, anonymization before the LLM |
 | NFR-02 | **Traceability** | Every AI interpretation records which data it was based on and which model generated it |
 | NFR-03 | **Score reproducibility** | Formula is versioned; old scores remain reproducible after a formula change |
-| NFR-04 | **Non-destructiveness** | Deletion is soft-delete; exam correction is a new record, never a silent edit |
+| NFR-04 | **Non-destructiveness** | In-account deletion is soft-delete and a correction is a new record, never a silent edit. Account deletion (FR-06) is different: an irreversible hard purge of all the account's data (LGPD right to erasure), detailed in `03-architecture/data-model.md` |
 | NFR-05 | **Honest reading** | Where an exam has a known clinical limitation, the UI does not present "no changes" as "all good" — it flags the limitation |
 | NFR-06 | **Parsing performance** | Extraction runs in an asynchronous process (job/worker); it does not block the UI or hit timeouts |
 | NFR-07 | **Responsiveness** | Dashboard and timeline are usable on mobile |
@@ -159,11 +159,14 @@ The MVP is ready when a user can, end to end:
 - One user = one patient in the MVP.
 - ~22 biomarkers cover most initial check-ups (see biomarker catalog, to be documented).
 
+**Resolved.**
+
+- Weight modeling: weight is an anthropometric `Measurement` — a flag on the `Biomarker`, not a dedicated table — so it inherits timeline, trend and deltas like lab markers. See [domain/patient.md](../02-domain/patient.md).
+
 **Open decisions** (recorded, not blocking this PRD):
 
 - Per-domain weights in the overall score (MVP: simple versioned mean).
 - Score saturation curve per marker.
-- Weight: dedicated `measurements` table vs anthropometric Result.
 - Triglycerides: primary Metabolic confirmed (secondary Cardiovascular).
 - Security NFRs (encryption in transit/at rest, access control) to be detailed later in the project.
 
@@ -171,7 +174,7 @@ The MVP is ready when a user can, end to end:
 
 ## 9. References
 
-- [`.biox/project.md`](../.biox/project.md) — product and architecture source of truth.
+- [`.biox/project.md`](../../.biox/project.md) — product and architecture source of truth.
 - Biomarker catalog — the ~22 markers, domains, clinical direction, parser synonyms *(to be added)*.
 - Domain model — entities, relationships, rules *(to be added)*.
 - Data model — detailed schemas and design principles *(to be added)*.

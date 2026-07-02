@@ -2,9 +2,9 @@
 
 | | |
 |---|---|
-| **Document** | `docs/roadmap.md` |
+| **Document** | `docs/01-product/roadmap.md` |
 | **Status** | Draft |
-| **Related** | [`product-requirements.md`](product-requirements.md) (what), [`.biox/project.md`](../.biox/project.md) (why) |
+| **Related** | [`product-requirements.md`](product-requirements.md) (what), [`.biox/project.md`](../../.biox/project.md) (why) |
 
 ---
 
@@ -30,23 +30,23 @@ Repository, branch workflow (`main` → `develop` → `feature/*`), README, MIT 
 
 The design that everything else implements.
 
+- **Domain model** ([`02-domain/`](../02-domain/overview.md)) — ubiquitous language and per-entity docs (Patient, Extraction, Batch, Measurement, Biomarker, Score, Insight).
 - **Biomarker catalog** — the ~22 markers: canonical names, units, domains, clinical direction, parser synonyms.
-- **Domain model** — entities, relationships and rules (Patient, Report, Result, Score, Insight...).
-- **Data model** — detailed schemas and design principles (soft-delete, versioning, weight modeling decision).
-- **ADR-001** — LLM provider (OpenRouter / Ollama).
-- **ADR-002** — RAG deferred from MVP (curated knowledge in context instead).
-- **ADR-003** — Backend architecture: dedicated NestJS service vs Next.js Route Handlers with a dedicated worker for long-running parsing jobs (which are likely to exceed serverless execution limits). Both are technically valid; a NestJS architecture means a solo developer maintains two separate deployments.
+- **Data model** (`03-architecture/data-model.md`) — detailed schemas and design principles (soft-delete, versioning, weight modeling decision), to be realized as a Prisma schema.
+- **Architecture Decision Records** ([`03-architecture/adr/`](../03-architecture/adr/README.md)):
+  - Accepted: PostgreSQL over Firestore (ADR-001), reference range per measurement (ADR-002), frozen versioned score (ADR-003), no RAG in the MVP (ADR-004), insight does not feed the score (ADR-005), LLM parser with human review (ADR-006).
+  - Proposed: backend architecture (ADR-007), LLM provider (ADR-008).
 - **Architecture overview** — Clean Architecture + DDD module map for frontend and backend.
 
-**Done when:** every MVP domain has its entities and rules documented; open decisions from PRD §8 are resolved or explicitly deferred.
+**Done when:** every MVP domain has its entities and rules documented; open decisions from PRD §8 are resolved or explicitly deferred; proposed ADRs (007, 008) accepted.
 
 ---
 
 ## M2 — Engineering scaffold
 
-The technical skeleton, empty but running — backend shape as decided in ADR-003.
+The technical skeleton, empty but running — backend shape as decided in ADR-007.
 
-- Monorepo with Next.js (web) and the backend per ADR-003 (dedicated NestJS api, or Next.js Route Handlers + parsing worker), TypeScript strict everywhere.
+- Monorepo with Next.js (web) and the backend per ADR-007 (dedicated NestJS api, or Next.js Route Handlers + parsing worker), TypeScript strict everywhere.
 - PostgreSQL + Prisma, Docker Compose for local development.
 - Firebase project (Authentication & Storage) wired to local development.
 - CI pipeline: lint, typecheck, tests on every PR.
@@ -58,15 +58,15 @@ The technical skeleton, empty but running — backend shape as decided in ADR-00
 
 ## M3 — Parser core (de-risking the anchor metric)
 
-A standalone, deterministic, fully-tested parsing package — built before the product UI so extraction quality is measured early.
+A standalone extraction package, built before the product UI so extraction quality is measured early. Per ADR-006, extraction is LLM-assisted with a mandatory human review step; the normalization and classification around it stay deterministic and fully unit-tested.
 
-- PDF text extraction for Brazilian lab report layouts.
+- Text extraction from Brazilian lab report PDFs, LLM-assisted (ADR-006, FR-08).
 - Extraction of the ~22 catalog biomarkers: values, units, reference ranges (FR-08).
-- Unit normalization to canonical units (FR-09).
+- Deterministic unit normalization to canonical units (FR-09).
 - Censored values preserving qualifiers (`< 0.3`, `> 1000`) (FR-12).
 - Corpus of real (anonymized) Brazilian lab reports + extraction quality report.
 
-**Done when:** extraction quality is measured against the corpus and considered acceptable to build on; parser logic is fully unit-tested (deterministic core).
+**Done when:** extraction quality is measured against the corpus and considered acceptable to build on; the deterministic normalization/classification logic is fully unit-tested.
 
 ---
 
@@ -147,7 +147,7 @@ AI enters last, on top of a working deterministic product.
 
 Deferred by the PRD, in no committed order:
 
-- **RAG + indexed knowledge base** — replaces curated-context grounding (revisits ADR-002; core learning goal of the project).
+- **RAG + indexed knowledge base** — replaces curated-context grounding (revisits ADR-004; core learning goal of the project).
 - **Protocol Engine** — interpretation by clinical condition.
 - **Recommendation engine.**
 - **Exportable reports** (PDF).
