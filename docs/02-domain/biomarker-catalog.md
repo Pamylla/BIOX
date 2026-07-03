@@ -26,7 +26,7 @@ Each entry follows the `Biomarker` definition:
 | `direction` | How to read the value: `high_bad` · `low_bad` · `range` · `context`. |
 | `synonyms` | Parser aliases — the names/abbreviations this marker appears under in Brazilian lab reports. |
 
-> **Reference ranges are not part of the catalog.** They come from each report, stored per `Measurement` (ADR-002, [biomarker.md](biomarker.md) boundary note). *(Open point: ADR-002 currently permits an optional catalog display-fallback range, which `biomarker.md` rules out — to be reconciled.)*
+> **Reference ranges are not part of the catalog.** They come from each report, stored per `Measurement` (ADR-002, [biomarker.md](biomarker.md) boundary note). When a report omits a range, the `Measurement` simply has none (neutral flag) — a range is never taken from the catalog.
 
 ## Catalog *(to be completed — ~22 markers)*
 
