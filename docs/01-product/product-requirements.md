@@ -117,7 +117,7 @@ Naming: `FR-##`. Priority: **P0** (MVP does not exist without it), **P1** (MVP i
 | NFR-01 | **Privacy (LGPD)** | Exam data is sensitive (art. 11): explicit consent, real data deletion, anonymization before the LLM |
 | NFR-02 | **Traceability** | Every AI interpretation records which data it was based on and which model generated it |
 | NFR-03 | **Score reproducibility** | Formula is versioned; old scores remain reproducible after a formula change |
-| NFR-04 | **Non-destructiveness** | In-account deletion is soft-delete and a correction is a new record, never a silent edit. Account deletion (FR-06) is different: an irreversible hard purge of all the account's data (LGPD right to erasure), detailed in `03-architecture/data-model.md` |
+| NFR-04 | **Non-destructiveness** | In-account deletion is soft-delete and a correction is a new record, never a silent edit. Account deletion (FR-06) is different: an irreversible hard purge of all the account's data (LGPD right to erasure), to be detailed in `03-architecture/data-model.md` *(to be added)* |
 | NFR-05 | **Honest reading** | Where an exam has a known clinical limitation, the UI does not present "no changes" as "all good" — it flags the limitation |
 | NFR-06 | **Parsing performance** | Extraction runs in an asynchronous process (job/worker); it does not block the UI or hit timeouts |
 | NFR-07 | **Responsiveness** | Dashboard and timeline are usable on mobile |
@@ -162,12 +162,12 @@ The MVP is ready when a user can, end to end:
 **Resolved.**
 
 - Weight modeling: weight is an anthropometric `Measurement` — a flag on the `Biomarker`, not a dedicated table — so it inherits timeline, trend and deltas like lab markers. See [domain/patient.md](../02-domain/patient.md).
+- Triglycerides classification: primary Metabolic, secondary Cardiovascular. See [domain/biomarker.md](../02-domain/biomarker.md).
 
 **Open decisions** (recorded, not blocking this PRD):
 
 - Per-domain weights in the overall score (MVP: simple versioned mean).
 - Score saturation curve per marker.
-- Triglycerides: primary Metabolic confirmed (secondary Cardiovascular).
 - Security NFRs (encryption in transit/at rest, access control) to be detailed later in the project.
 
 ---
