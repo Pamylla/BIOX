@@ -28,7 +28,7 @@ Not the `Batch`'s responsibility: the file and the extraction process (that's `E
 
 ## Business rules
 
-- **The collection date, not the upload date, is the temporal axis.** It orders the timeline and the trends. An exam collected in January and uploaded in March belongs to January on the timeline.
+- **The collection date, not the upload date, is the temporal axis.** It orders the timeline and the trends. Measurements collected in January and uploaded in March belong to January on the timeline.
 - **Duplicate detection at query-time.** Same marker, same date, is flagged in the review modal — no extra schema field, it is a check performed at query time.
 - **A `Batch` is an immutable version.** Once confirmed, it is not silently edited; a correction comes as new data (a new `Extraction`/review), preserving history.
 - **Cascading soft-delete:** deleting a `Batch` marks its `Measurements` and the `Scores` anchored to it as deleted.

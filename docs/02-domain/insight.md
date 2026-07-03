@@ -2,7 +2,7 @@
 
 **Document:** `docs/02-domain/insight.md`
 **Type:** AI-generated entity
-**Related:** `overview.md`, `measurement.md`, `score.md`, ADR-005 (insight does not feed the score), ADR-006 (anonymization)
+**Related:** `overview.md`, `measurement.md`, `score.md`, ADR-005 (insight does not feed the score), FR-28/NFR-01 (anonymization before the LLM)
 
 ---
 
@@ -34,7 +34,7 @@ Not the `Insight`'s responsibility: computing scores, altering data, or reaching
 - **Always stores `basedOnResultIds` + model + disclaimer.** Every explanation is traceable to the data that originated it and the model that generated it. Without that, it is not an insight — it is a guess.
 - **No diagnosis, prescription, or treatment.** It interprets and contextualizes ("iron improving, still below ideal"); it never concludes a disease or suggests a course of action. A design boundary, not a temporary limitation.
 - **Does not hide a limitation by omission.** Where a marker has a known limitation, the insight mentions it — it does not present "no signal" as "all clear".
-- **Anonymization before the LLM** (ADR-006). Patient identifiers are removed before any call to the model (LGPD).
+- **Anonymization before the LLM** (FR-28, NFR-01). Patient identifiers are removed before any call to the model (LGPD).
 
 ## Knowledge as context
 

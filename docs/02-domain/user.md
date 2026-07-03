@@ -27,7 +27,7 @@ Not the `User`'s responsibility: holding clinical data (that's `Patient`). A `Us
 
 - **Explicit LGPD consent** for processing sensitive data (art. 11) is mandatory at signup, with a recorded date.
 - **Credentials never travel through nor are stored by the system** — that is the authentication provider's responsibility. The system never sees or stores a password.
-- **Account deletion triggers the purge** (see PRD §5.1): permanent, irreversible removal of the linked personal data, including already soft-deleted records and the files in Storage. Not to be confused with operational soft-delete.
+- **Account deletion triggers the purge** (FR-06; NFR-04): permanent, irreversible removal of the linked personal data, including already soft-deleted records and the files in Storage — the purge mechanism will be detailed in `03-architecture/data-model.md` *(to be added)*. Not to be confused with operational soft-delete.
 
 ## Future evolution
 
