@@ -20,7 +20,7 @@ Represent the **value of a `Biomarker` measured on a specific date**, with the r
 
 ## Relationships
 
-- Belongs to a `Batch` and a `Patient`.
+- Belongs to a `Patient`. A laboratory `Measurement` also belongs to a `Batch` (its clinical event); an anthropometric `Measurement` (manual Profile entry, e.g. weight) has no `Batch` — its collection date lives on the `Measurement` itself.
 - References a `Biomarker` (the global definition; the `Measurement` is the measured instance).
 - Consumed by `Scores` (it enters the computation) and by `Insights` (read by the AI).
 
