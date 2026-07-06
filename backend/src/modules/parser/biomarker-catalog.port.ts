@@ -17,8 +17,13 @@ import type { PlausibleMagnitude } from "./magnitude";
 export interface CatalogEntry {
   /** Stable catalog code — matches ExtractedMarker.catalogKey. */
   code: string;
-  /** The unit every `Measurement` of this marker is normalized to (FR-09). */
-  canonicalUnit: string;
+  /**
+   * The unit every `Measurement` of this marker is normalized to (FR-09).
+   * Optional: a marker whose clinical reference data is not yet curated may lack
+   * it. Without a canonical unit nothing can be converted, so any reported unit
+   * is flagged for review rather than trusted — safe degradation, never a guess.
+   */
+  canonicalUnit?: string;
   /**
    * Known unit→canonical conversion factors for this marker, keyed by the source
    * unit exactly as it may appear on a report (e.g. `{ "mg/dL": 10 }` for a

@@ -56,8 +56,14 @@ export function toCanonical(
     return { valueCanonical: null, canonicalUnit: null, factor: null, reasons: [] };
   }
 
-  const canonicalUnit = entry.canonicalUnit;
+  const canonicalUnit = entry.canonicalUnit ?? null;
   const from = fromUnit.trim();
+
+  // No canonical unit yet (uncurated marker): nothing to target. The value stays
+  // unconverted and is flagged, never guessed — safe degradation.
+  if (canonicalUnit === null) {
+    return { valueCanonical: null, canonicalUnit: null, factor: null, reasons: ["unit_unknown"] };
+  }
 
   // Already canonical: an implicit factor of 1, no conversion performed.
   if (from === canonicalUnit) {
