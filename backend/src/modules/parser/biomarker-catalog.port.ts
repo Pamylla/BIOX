@@ -20,6 +20,17 @@ export interface CatalogEntry {
   /** The unit every `Measurement` of this marker is normalized to (FR-09). */
   canonicalUnit: string;
   /**
+   * Known unit→canonical conversion factors for this marker, keyed by the source
+   * unit exactly as it may appear on a report (e.g. `{ "mg/dL": 10 }` for a
+   * marker whose `canonicalUnit` is `mg/L`). Multiply a value in the source unit
+   * by its factor to reach `canonicalUnit`. The canonical unit itself is NOT
+   * listed here — it is an implicit factor of 1. Optional and curated
+   * marker-by-marker: a marker with no pairs can only accept values that are
+   * already in `canonicalUnit`; any other unit is unmapped and flagged for
+   * review, never converted with a guessed factor.
+   */
+  conversions?: Record<string, number>;
+  /**
    * Parsing plausibility band, in `canonicalUnit`. Optional: a marker without
    * one simply skips the magnitude sanity check. This is NOT a clinical
    * reference range — those are never in the catalog and always come

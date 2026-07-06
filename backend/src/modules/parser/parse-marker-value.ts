@@ -6,7 +6,8 @@
  * in — and, critically, it runs that check on the CANONICAL value:
  *
  *   1. parse the Brazilian-formatted string  (brazilian-number.ts)
- *   2. convert the value to the marker's canonical unit  (conversionFactor)
+ *   2. convert the value to the marker's canonical unit using the catalog's
+ *      conversion pairs  (unit-conversion.ts)
  *   3. check the magnitude against the catalog's plausibility band, which is
  *      itself defined in the canonical unit  (magnitude.ts)
  *
@@ -23,7 +24,11 @@ import {
   type NumberReviewReason,
 } from "./brazilian-number";
 import { isWithinPlausibleMagnitude } from "./magnitude";
+import { toCanonical, type UnitReviewReason } from "./unit-conversion";
 import type { BiomarkerCatalogPort } from "./biomarker-catalog.port";
+
+/** Every review reason a parsed marker value can carry, from any pipeline step. */
+export type MarkerReviewReason = NumberReviewReason | UnitReviewReason;
 
 export interface MarkerValueInput {
   /** Resolved catalog code (ExtractedMarker.catalogKey). */
@@ -32,14 +37,6 @@ export interface MarkerValueInput {
   rawValue: string;
   /** The unit as printed on the report, e.g. "mg/dL". */
   unit: string;
-  /**
-   * Factor that converts `value` (report unit) into the marker's canonical unit,
-   * supplied by the unit-normalization step (spike #1). Omit or pass `null` when
-   * the report unit already IS the canonical unit (treated as factor 1) or when
-   * no conversion is known (then the value cannot be checked and is left
-   * uncanonicalized).
-   */
-  conversionFactor?: number | null;
 }
 
 export interface ParsedMarkerValue {
@@ -58,7 +55,7 @@ export interface ParsedMarkerValue {
   /** True if a human must confirm before this value is trusted. */
   needsReview: boolean;
   /** Machine-readable reasons for review (empty when clean). */
-  reasons: NumberReviewReason[];
+  reasons: MarkerReviewReason[];
 }
 
 /**
@@ -73,25 +70,21 @@ export function parseMarkerValue(
 ): ParsedMarkerValue {
   const parsed = parseBrazilianNumber(input.rawValue);
   const entry = catalog.findByCode(input.catalogKey);
-  const reasons: NumberReviewReason[] = [...parsed.reasons];
+  const reasons: MarkerReviewReason[] = [...parsed.reasons];
 
-  const canonicalUnit = entry?.canonicalUnit ?? null;
-
-  // Resolve the factor: explicit > same-unit (1) > unknown (cannot convert).
-  let conversionFactor: number | null;
-  if (input.conversionFactor != null) {
-    conversionFactor = input.conversionFactor;
-  } else if (canonicalUnit !== null && input.unit === canonicalUnit) {
-    conversionFactor = 1;
-  } else {
-    conversionFactor = null;
-  }
-
-  // Convert FIRST — the plausibility band is defined in the canonical unit.
-  const valueCanonical =
-    parsed.value === null || conversionFactor === null
+  // Convert to the canonical unit FIRST — the plausibility band is defined in
+  // that unit. The factor comes from the catalog (via the port), never guessed;
+  // an unmapped unit is flagged, not converted. Skip the step when there is no
+  // number to convert (unparseable input) so it adds no redundant unit flag.
+  const converted =
+    parsed.value === null
       ? null
-      : parsed.value * conversionFactor;
+      : toCanonical(parsed.value, input.unit, input.catalogKey, catalog);
+
+  const canonicalUnit = converted?.canonicalUnit ?? entry?.canonicalUnit ?? null;
+  const conversionFactor = converted?.factor ?? null;
+  const valueCanonical = converted?.valueCanonical ?? null;
+  if (converted) reasons.push(...converted.reasons);
 
   // THEN check magnitude, in the canonical unit. Skip silently when there is
   // nothing to check against (no canonical value, or no band for this marker).

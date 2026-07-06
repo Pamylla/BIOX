@@ -5,12 +5,13 @@ import type {
   CatalogEntry,
 } from "./biomarker-catalog.port";
 
-// A synthetic in-memory catalog for the tests. The bands are illustrative and
-// expressed in each entry's canonical unit — NOT real clinical reference data.
+// A synthetic in-memory catalog for the tests. The bands and conversion pairs
+// are illustrative and expressed in each entry's canonical unit — NOT real
+// clinical reference data.
 const ENTRIES: Record<string, CatalogEntry> = {
-  pcr_us: { code: "pcr_us", canonicalUnit: "mg/L", plausibleMagnitude: { min: 0.1, max: 20 } },
+  pcr_us: { code: "pcr_us", canonicalUnit: "mg/L", conversions: { "mg/dL": 10 }, plausibleMagnitude: { min: 0.1, max: 20 } },
   ferritina: { code: "ferritina", canonicalUnit: "ng/mL", plausibleMagnitude: { min: 11, max: 307 } },
-  enzima: { code: "enzima", canonicalUnit: "U/L", plausibleMagnitude: { min: 1, max: 10 } },
+  enzima: { code: "enzima", canonicalUnit: "U/L", conversions: { "kU/L": 1000 }, plausibleMagnitude: { min: 1, max: 10 } },
   peso: { code: "peso", canonicalUnit: "kg" }, // no plausibility band
 };
 
@@ -19,10 +20,10 @@ const catalog: BiomarkerCatalogPort = {
 };
 
 describe("parseMarkerValue — convert to canonical, then check magnitude", () => {
-  it("converts with the supplied factor before checking, and passes an in-band value", () => {
-    // hs-CRP printed as 0,03 mg/dL; ×10 -> 0.3 mg/L, inside the mg/L band.
+  it("converts with the catalog's factor before checking, and passes an in-band value", () => {
+    // hs-CRP printed as 0,03 mg/dL; the catalog's ×10 pair -> 0.3 mg/L, in band.
     const result = parseMarkerValue(
-      { catalogKey: "pcr_us", rawValue: "0,03", unit: "mg/dL", conversionFactor: 10 },
+      { catalogKey: "pcr_us", rawValue: "0,03", unit: "mg/dL" },
       catalog,
     );
     expect(result.value).toBe(0.03);
@@ -34,10 +35,11 @@ describe("parseMarkerValue — convert to canonical, then check magnitude", () =
   });
 
   it("checks the CANONICAL value, not the raw one", () => {
-    // Raw 5 sits inside the [1, 10] band, but ×1000 -> 5000 U/L is far outside.
-    // A check on the raw value would wrongly pass; on the canonical value it flags.
+    // Raw 5 sits inside the [1, 10] band, but the catalog's ×1000 pair -> 5000
+    // U/L is far outside. A check on the raw value would wrongly pass; on the
+    // canonical value it flags.
     const result = parseMarkerValue(
-      { catalogKey: "enzima", rawValue: "5", unit: "kU/L", conversionFactor: 1000 },
+      { catalogKey: "enzima", rawValue: "5", unit: "kU/L" },
       catalog,
     );
     expect(result.value).toBe(5);
@@ -78,6 +80,37 @@ describe("parseMarkerValue — convert to canonical, then check magnitude", () =
   });
 });
 
+describe("parseMarkerValue — integration: number -> unit -> magnitude, in order", () => {
+  it("runs the three steps in order on a raw BR value and stays clean when plausible", () => {
+    // "3,0" (BR decimal) -> 3.0 mg/dL -> ×10 -> 30 mg/L. Band 0.1..20 widened by
+    // ~5x tolerance -> ~100, so 30 is plausible. Every step must fire in order.
+    const result = parseMarkerValue(
+      { catalogKey: "pcr_us", rawValue: "3,0", unit: "mg/dL" },
+      catalog,
+    );
+    expect(result.value).toBe(3); // number step: comma is the decimal
+    expect(result.conversionFactor).toBe(10); // unit step: catalog pair
+    expect(result.valueCanonical).toBe(30); // 3 mg/dL -> 30 mg/L
+    expect(result.reasons).toEqual([]);
+    expect(result.needsReview).toBe(false);
+  });
+
+  it("catches a ~100x conversion error via the magnitude check on the CANONICAL value", () => {
+    // A mis-entered "300" mg/dL is ~100x too high for hs-CRP. The number parses
+    // fine and the unit converts fine (×10 -> 3000 mg/L); only the magnitude
+    // check on the canonical value (band max 20, ~100 with tolerance) catches it.
+    const result = parseMarkerValue(
+      { catalogKey: "pcr_us", rawValue: "300", unit: "mg/dL" },
+      catalog,
+    );
+    expect(result.value).toBe(300); // number step: parses cleanly
+    expect(result.conversionFactor).toBe(10); // unit step: converts cleanly
+    expect(result.valueCanonical).toBe(3000); // 300 mg/dL -> 3000 mg/L
+    expect(result.reasons).toContain("magnitude_out_of_range"); // caught on canonical
+    expect(result.needsReview).toBe(true);
+  });
+});
+
 describe("parseMarkerValue — when the check cannot or should not run", () => {
   it("skips the check for a marker with no plausibility band", () => {
     const result = parseMarkerValue(
@@ -101,14 +134,16 @@ describe("parseMarkerValue — when the check cannot or should not run", () => {
     expect(result.reasons).not.toContain("magnitude_out_of_range");
   });
 
-  it("does not guess a conversion: differing units with no factor leaves the value uncanonicalized", () => {
+  it("does not guess a conversion: an unmapped unit is flagged, never converted", () => {
     const result = parseMarkerValue(
-      { catalogKey: "pcr_us", rawValue: "0,03", unit: "mg/dL" }, // canonical is mg/L, no factor given
+      { catalogKey: "pcr_us", rawValue: "0,03", unit: "nmol/L" }, // no pair for nmol/L
       catalog,
     );
     expect(result.value).toBe(0.03);
     expect(result.conversionFactor).toBeNull();
     expect(result.valueCanonical).toBeNull();
+    expect(result.reasons).toContain("unit_unknown");
+    expect(result.needsReview).toBe(true);
     expect(result.reasons).not.toContain("magnitude_out_of_range");
   });
 
