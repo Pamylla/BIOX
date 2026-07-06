@@ -25,8 +25,11 @@ Each entry follows the `Biomarker` definition:
 | `secondaryDomains` | Domains where the marker is interpretive **context only** — it does not score there. |
 | `direction` | How to read the value: `high_bad` · `low_bad` · `range` · `context`. |
 | `synonyms` | Parser aliases — the names/abbreviations this marker appears under in Brazilian lab reports. |
+| `plausibleMagnitude` | *(optional)* Expected order-of-magnitude band `{ min?, max?, toleranceOrders? }`, **in `canonicalUnit`** — a parsing safety net (spike #8), **not** a clinical range. See the note below. |
 
 > **Reference ranges are not part of the catalog.** They come from each report, stored per `Measurement` (ADR-002, [biomarker.md](biomarker.md) boundary note). When a report omits a range, the `Measurement` simply has none (neutral flag) — a range is never taken from the catalog.
+
+> **`plausibleMagnitude` is a parsing band, not a clinical judgement.** It states the expected order of magnitude for a real value, in the marker's canonical unit, and exists only to flag separator/parse errors — a decimal slip turning `24` into `2400` (see [parser-spike.md](../03-architecture/parser-spike.md) #8). It never classifies a result and does **not** conflict with ADR-002: the clinical reference range still comes solely from the report, per `Measurement`. The value is converted to `canonicalUnit` **before** the check, so the band is defined in that unit; a marker may omit the band, and then the check is simply skipped. Example (illustrative): ferritin `{ min: 11, max: 307 }` in ng/mL.
 
 ## Catalog *(to be completed — ~22 markers)*
 
