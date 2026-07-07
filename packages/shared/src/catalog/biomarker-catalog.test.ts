@@ -1,8 +1,5 @@
 import { describe, it, expect } from "vitest";
-import {
-  biomarkerCatalog,
-  createBiomarkerCatalog,
-} from "./biomarker-catalog";
+import { biomarkerCatalog, createBiomarkerCatalog } from "./biomarker-catalog";
 import { parseMarkerValue } from "../extraction/parse-marker-value";
 import type { BiomarkerDefinition } from "./biomarker.types";
 
@@ -188,9 +185,18 @@ describe("biomarkerCatalog — Lote 2 (single-unit markers)", () => {
 
 describe("biomarkerCatalog — plausibleMagnitude fuses (confirmed + Lote 2 only)", () => {
   it("cadastra a band, in the canonical unit, for markers with a confirmed unit", () => {
-    expect(biomarkerCatalog.findByCode("triglicerideos")?.plausibleMagnitude).toEqual({ min: 5, max: 10000 });
-    expect(biomarkerCatalog.findByCode("hemoglobina")?.plausibleMagnitude).toEqual({ min: 2, max: 25 });
-    expect(biomarkerCatalog.findByCode("leucocitos")?.plausibleMagnitude).toEqual({ min: 100, max: 500000 });
+    expect(biomarkerCatalog.findByCode("triglicerideos")?.plausibleMagnitude).toEqual({
+      min: 5,
+      max: 10000,
+    });
+    expect(biomarkerCatalog.findByCode("hemoglobina")?.plausibleMagnitude).toEqual({
+      min: 2,
+      max: 25,
+    });
+    expect(biomarkerCatalog.findByCode("leucocitos")?.plausibleMagnitude).toEqual({
+      min: 100,
+      max: 500000,
+    });
   });
 
   it("catches a gross number-conversion error (Hb 14 mis-parsed as 140 g/dL)", () => {
@@ -214,7 +220,15 @@ describe("biomarkerCatalog — plausibleMagnitude fuses (confirmed + Lote 2 only
   });
 
   it("does not seed Lote 1/Lote 3 markers (no band could be in the wrong unit)", () => {
-    for (const code of ["colesterol_total", "ldl", "hdl", "glicose", "creatinina", "ferro", "vitamina_d"]) {
+    for (const code of [
+      "colesterol_total",
+      "ldl",
+      "hdl",
+      "glicose",
+      "creatinina",
+      "ferro",
+      "vitamina_d",
+    ]) {
       expect(biomarkerCatalog.findByCode(code)).toBeNull();
     }
   });
@@ -223,16 +237,48 @@ describe("biomarkerCatalog — plausibleMagnitude fuses (confirmed + Lote 2 only
 describe("createBiomarkerCatalog — curation guards", () => {
   it("throws on a duplicate code", () => {
     const dup: BiomarkerDefinition[] = [
-      { code: "x", canonicalName: "X", synonyms: [], primaryDomain: null, secondaryDomains: [], direction: "context", type: "laboratory" },
-      { code: "x", canonicalName: "X2", synonyms: [], primaryDomain: null, secondaryDomains: [], direction: "context", type: "laboratory" },
+      {
+        code: "x",
+        canonicalName: "X",
+        synonyms: [],
+        primaryDomain: null,
+        secondaryDomains: [],
+        direction: "context",
+        type: "laboratory",
+      },
+      {
+        code: "x",
+        canonicalName: "X2",
+        synonyms: [],
+        primaryDomain: null,
+        secondaryDomains: [],
+        direction: "context",
+        type: "laboratory",
+      },
     ];
     expect(() => createBiomarkerCatalog(dup)).toThrow(/Duplicate/);
   });
 
   it("throws when two markers claim the same synonym", () => {
     const clash: BiomarkerDefinition[] = [
-      { code: "a", canonicalName: "A", synonyms: ["shared"], primaryDomain: null, secondaryDomains: [], direction: "context", type: "laboratory" },
-      { code: "b", canonicalName: "B", synonyms: ["Shared"], primaryDomain: null, secondaryDomains: [], direction: "context", type: "laboratory" },
+      {
+        code: "a",
+        canonicalName: "A",
+        synonyms: ["shared"],
+        primaryDomain: null,
+        secondaryDomains: [],
+        direction: "context",
+        type: "laboratory",
+      },
+      {
+        code: "b",
+        canonicalName: "B",
+        synonyms: ["Shared"],
+        primaryDomain: null,
+        secondaryDomains: [],
+        direction: "context",
+        type: "laboratory",
+      },
     ];
     expect(() => createBiomarkerCatalog(clash)).toThrow(/Ambiguous/);
   });

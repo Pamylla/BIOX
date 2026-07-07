@@ -1,17 +1,28 @@
 import { describe, it, expect } from "vitest";
 import { parseMarkerValue } from "./parse-marker-value";
-import type {
-  BiomarkerCatalogPort,
-  CatalogEntry,
-} from "./biomarker-catalog.port";
+import type { BiomarkerCatalogPort, CatalogEntry } from "./biomarker-catalog.port";
 
 // A synthetic in-memory catalog for the tests. The bands and conversion pairs
 // are illustrative and expressed in each entry's canonical unit — NOT real
 // clinical reference data.
 const ENTRIES: Record<string, CatalogEntry> = {
-  pcr_us: { code: "pcr_us", canonicalUnit: "mg/L", conversions: { "mg/dL": 10 }, plausibleMagnitude: { min: 0.1, max: 20 } },
-  ferritina: { code: "ferritina", canonicalUnit: "ng/mL", plausibleMagnitude: { min: 11, max: 307 } },
-  enzima: { code: "enzima", canonicalUnit: "U/L", conversions: { "kU/L": 1000 }, plausibleMagnitude: { min: 1, max: 10 } },
+  pcr_us: {
+    code: "pcr_us",
+    canonicalUnit: "mg/L",
+    conversions: { "mg/dL": 10 },
+    plausibleMagnitude: { min: 0.1, max: 20 },
+  },
+  ferritina: {
+    code: "ferritina",
+    canonicalUnit: "ng/mL",
+    plausibleMagnitude: { min: 11, max: 307 },
+  },
+  enzima: {
+    code: "enzima",
+    canonicalUnit: "U/L",
+    conversions: { "kU/L": 1000 },
+    plausibleMagnitude: { min: 1, max: 10 },
+  },
   peso: { code: "peso", canonicalUnit: "kg" }, // no plausibility band
 };
 
@@ -38,10 +49,7 @@ describe("parseMarkerValue — convert to canonical, then check magnitude", () =
     // Raw 5 sits inside the [1, 10] band, but the catalog's ×1000 pair -> 5000
     // U/L is far outside. A check on the raw value would wrongly pass; on the
     // canonical value it flags.
-    const result = parseMarkerValue(
-      { catalogKey: "enzima", rawValue: "5", unit: "kU/L" },
-      catalog,
-    );
+    const result = parseMarkerValue({ catalogKey: "enzima", rawValue: "5", unit: "kU/L" }, catalog);
     expect(result.value).toBe(5);
     expect(result.valueCanonical).toBe(5000);
     expect(result.reasons).toContain("magnitude_out_of_range");

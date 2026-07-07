@@ -36,9 +36,9 @@ export interface ParsedNumber {
 }
 
 export type NumberReviewReason =
-  | "unparseable"        // could not extract a number at all
+  | "unparseable" // could not extract a number at all
   | "ambiguous_separator" // dot/comma pattern is not resolvable with confidence
-  | "censored_value"     // "< x" / "> x" — value is a bound, not a point
+  | "censored_value" // "< x" / "> x" — value is a bound, not a point
   | "magnitude_out_of_range"; // canonical value failed the plausibility check — emitted by parse-marker-value, not this module
 
 /**
@@ -134,7 +134,7 @@ interface BrConversion {
  */
 function brToNumber(token: string): BrConversion {
   const negative = token.startsWith("-");
-  let t = negative ? token.slice(1) : token;
+  const t = negative ? token.slice(1) : token;
 
   const hasComma = t.includes(",");
   const hasDot = t.includes(".");

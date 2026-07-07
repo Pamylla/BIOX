@@ -6,11 +6,7 @@ import { defineConfig } from "tsup";
  * statically analyzable by bundlers in its ESM form — hence both formats.
  */
 export default defineConfig({
-  entry: [
-    "src/index.ts",
-    "src/extraction/index.ts",
-    "src/catalog/index.ts",
-  ],
+  entry: ["src/index.ts", "src/extraction/index.ts", "src/catalog/index.ts"],
   format: ["esm", "cjs"],
   dts: true,
   sourcemap: true,

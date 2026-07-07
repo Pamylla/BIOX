@@ -20,12 +20,7 @@ import type { PlausibleMagnitude } from "../extraction/magnitude";
 export type BiomarkerType = "laboratory" | "anthropometric";
 
 /** The five scoring domains. */
-export type Domain =
-  | "Inflammation"
-  | "Iron"
-  | "Metabolic"
-  | "Thyroid"
-  | "Cardiovascular";
+export type Domain = "Inflammation" | "Iron" | "Metabolic" | "Thyroid" | "Cardiovascular";
 
 /** How to read the value clinically (the sense of the reading, not the numbers). */
 export type Direction = "high_bad" | "low_bad" | "range" | "context";

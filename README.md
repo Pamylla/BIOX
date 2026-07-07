@@ -30,15 +30,15 @@ Instead of showing isolated laboratory values, BIOX helps users understand the *
 
 ## Tech stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | React, Next.js, TypeScript |
-| Backend | NestJS or Next.js Route Handlers + worker (ADR-007), TypeScript |
-| Database | PostgreSQL, Prisma ORM |
-| Auth & Storage | Firebase |
-| AI | LLM integration, Prompt Engineering (RAG & Vector Search post-MVP) |
-| Documents | PDF parser (OCR post-MVP) |
-| Delivery | Docker, CI/CD |
+| Layer          | Technology                                                         |
+| -------------- | ------------------------------------------------------------------ |
+| Frontend       | React, Next.js, TypeScript                                         |
+| Backend        | NestJS or Next.js Route Handlers + worker (ADR-007), TypeScript    |
+| Database       | PostgreSQL, Prisma ORM                                             |
+| Auth & Storage | Firebase                                                           |
+| AI             | LLM integration, Prompt Engineering (RAG & Vector Search post-MVP) |
+| Documents      | PDF parser (OCR post-MVP)                                          |
+| Delivery       | Docker, CI/CD                                                      |
 
 ## Project structure
 

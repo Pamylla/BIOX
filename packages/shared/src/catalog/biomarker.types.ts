@@ -10,12 +10,7 @@
 import type { PlausibleMagnitude } from "../extraction/magnitude";
 
 /** The five scoring domains of the MVP. */
-export type HealthDomain =
-  | "Inflammation"
-  | "Iron"
-  | "Metabolic"
-  | "Thyroid"
-  | "Cardiovascular";
+export type HealthDomain = "Inflammation" | "Iron" | "Metabolic" | "Thyroid" | "Cardiovascular";
 
 /** How the value is read clinically (see biomarker.md). */
 export type Direction = "high_bad" | "low_bad" | "range" | "context";

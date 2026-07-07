@@ -507,15 +507,15 @@ Tamanhos: **P** ≈ até 1 dia · **M** ≈ 2–4 dias · **G** ≈ 1 semana+ (r
 
 ### Fase 0 — Fundação do repositório [M]
 
-- [ ] pnpm workspaces (`apps/web`, `apps/api`, `packages/shared`) + TS strict em tudo (`noUncheckedIndexedAccess` incluso)
-- [ ] ESLint + Prettier compartilhados; husky + lint-staged
-- [ ] `docker-compose.yml` com Postgres 16 local
-- [ ] `apps/api`: NestJS bootstrap + `/v1/health` + Prisma conectado + pg-boss inicializado
-- [ ] `apps/web`: Vite + React + Router bootstrap, página placeholder
-- [ ] `packages/shared`: build TS, importável pelos dois apps (teste de fumaça)
+- [x] pnpm workspaces (`apps/web`, `apps/api`, `packages/shared`) + TS strict em tudo (`noUncheckedIndexedAccess` incluso)
+- [x] ESLint + Prettier compartilhados; husky + lint-staged
+- [ ] `docker-compose.yml` com Postgres 16 local *(adiado — infra pulada por ora)*
+- [ ] `apps/api`: NestJS bootstrap + `/v1/health` ✓ · Prisma + pg-boss *(adiado — infra pulada por ora)*
+- [x] `apps/web`: Vite + React + Router bootstrap, página placeholder
+- [x] `packages/shared`: build TS, importável pelos dois apps (teste de fumaça)
 - [ ] GitHub Actions: lint + typecheck + test + build em PR
 - [ ] `.env.example` completo (seção 15) + README esqueleto
-- [ ] Migrar `brazilian-number.ts` (com testes) para `packages/shared/extraction`
+- [x] Migrar `brazilian-number.ts` (com testes) para `packages/shared/extraction`
 
 **Aceite:** `pnpm i && pnpm dev` sobe web+api; CI verde; shared importado dos dois lados.
 

@@ -18,11 +18,7 @@
  * The parser depends on `BiomarkerCatalogPort`, never on the concrete catalog.
  */
 
-import {
-  parseBrazilianNumber,
-  type Censoring,
-  type NumberReviewReason,
-} from "./brazilian-number";
+import { parseBrazilianNumber, type Censoring, type NumberReviewReason } from "./brazilian-number";
 import { isWithinPlausibleMagnitude } from "./magnitude";
 import { toCanonical, type UnitReviewReason } from "./unit-conversion";
 import type { BiomarkerCatalogPort } from "./biomarker-catalog.port";
@@ -77,9 +73,7 @@ export function parseMarkerValue(
   // an unmapped unit is flagged, not converted. Skip the step when there is no
   // number to convert (unparseable input) so it adds no redundant unit flag.
   const converted =
-    parsed.value === null
-      ? null
-      : toCanonical(parsed.value, input.unit, input.catalogKey, catalog);
+    parsed.value === null ? null : toCanonical(parsed.value, input.unit, input.catalogKey, catalog);
 
   const canonicalUnit = converted?.canonicalUnit ?? entry?.canonicalUnit ?? null;
   const conversionFactor = converted?.factor ?? null;
