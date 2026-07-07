@@ -513,7 +513,7 @@ Tamanhos: **P** ≈ até 1 dia · **M** ≈ 2–4 dias · **G** ≈ 1 semana+ (r
 - [ ] `apps/api`: NestJS bootstrap + `/v1/health` ✓ · Prisma + pg-boss *(adiado — infra pulada por ora)*
 - [x] `apps/web`: Vite + React + Router bootstrap, página placeholder
 - [x] `packages/shared`: build TS, importável pelos dois apps (teste de fumaça)
-- [ ] GitHub Actions: lint + typecheck + test + build em PR
+- [x] GitHub Actions: lint + typecheck + test + build em PR
 - [ ] `.env.example` completo (seção 15) + README esqueleto
 - [x] Migrar `brazilian-number.ts` (com testes) para `packages/shared/extraction`
 
