@@ -245,6 +245,9 @@ const ICONS = {
 
 export type IconName = keyof typeof ICONS;
 
+/** All registered icon names — the playground renders the full set from this. */
+export const ICON_NAMES = Object.keys(ICONS) as IconName[];
+
 interface IconProps extends SVGAttributes<SVGSVGElement> {
   name: IconName;
   /** Rendered width/height in px. */

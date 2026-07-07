@@ -2,7 +2,7 @@ export { Avatar } from "./Avatar";
 export { Button } from "./Button";
 export { Card, CardTitle } from "./Card";
 export { Field, Input } from "./Field";
-export { Icon, type IconName } from "./Icon";
+export { Icon, ICON_NAMES, type IconName } from "./Icon";
 export { Kicker } from "./Kicker";
 export { Link } from "./Link";
 export { Pill } from "./Pill";
