@@ -1,0 +1,19 @@
+.wrap {
+  position: relative;
+  flex: none;
+}
+
+/* Prototype .trk */
+.track {
+  stroke: var(--line-2);
+}
+
+/* Prototype .ringc — centered overlay for the number/label */
+.center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

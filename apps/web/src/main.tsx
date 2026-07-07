@@ -5,8 +5,12 @@ import "./ui/fonts";
 import "./ui/tokens.css";
 import "./ui/base.css";
 import { App } from "./App";
+import { Playground } from "./playground/Playground";
 
-const router = createBrowserRouter([{ path: "/", element: <App /> }]);
+const router = createBrowserRouter([
+  { path: "/", element: <App /> },
+  { path: "/playground", element: <Playground /> },
+]);
 
 const rootEl = document.getElementById("root");
 if (!rootEl) {

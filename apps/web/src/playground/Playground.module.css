@@ -1,0 +1,93 @@
+.page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 30px 40px 90px;
+}
+
+.title {
+  font: 600 30px/1.05 "Space Grotesk";
+  letter-spacing: -0.022em;
+  margin: 8px 0 0;
+}
+
+.subtitle {
+  color: var(--ink-2);
+  font-size: 14.5px;
+  margin-top: 9px;
+  max-width: 640px;
+  line-height: 1.5;
+}
+
+.section {
+  margin-top: 40px;
+}
+
+.sectionTitle {
+  margin-bottom: 14px;
+}
+
+/* Generic demo row: components side by side, vertically centered */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+.row + .row {
+  margin-top: 14px;
+}
+
+/* Caption under/next to a demo */
+.spec {
+  font: 500 11px "IBM Plex Mono";
+  color: var(--ink-3);
+}
+
+.clip {
+  overflow: hidden;
+}
+
+.formDemo {
+  max-width: 392px;
+}
+
+/* Ring center typography (prototype .sringn / .ringnum / .ringof) */
+.ringNumSm {
+  font: 600 18px "Space Grotesk";
+}
+.ringNumLg {
+  font: 600 44px/1 "Space Grotesk";
+  letter-spacing: -0.02em;
+}
+.ringOf {
+  font: 500 12px "IBM Plex Mono";
+  color: var(--ink-3);
+  margin-top: 2px;
+}
+
+.sparkTrend {
+  width: 300px;
+}
+
+.bandDemo {
+  width: 300px;
+}
+
+.iconGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(108px, 1fr));
+  gap: 10px;
+}
+
+.iconTile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 8px 11px;
+  background: #fff;
+  border: 1px solid var(--line-2);
+  border-radius: 12px;
+  color: var(--ink-2);
+}

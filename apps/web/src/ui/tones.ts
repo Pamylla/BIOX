@@ -6,3 +6,13 @@
 export type FlagTone = "good" | "watch" | "alert";
 export type StatusTone = FlagTone | "none";
 export type PillTone = FlagTone | "ai" | "blue" | "ink";
+
+/** Tones the prototype uses for SVG strokes (.stk-*). */
+export type StrokeTone = FlagTone | "blue";
+
+export const strokeColor: Record<StrokeTone, string> = {
+  good: "var(--good)",
+  watch: "var(--watch)",
+  alert: "var(--alert)",
+  blue: "var(--blue)",
+};
