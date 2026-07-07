@@ -8,6 +8,8 @@ import { ApiProvider, MockApiClient } from "./api";
 import { AppLayout } from "./app/AppLayout";
 import { ScreenPlaceholder } from "./app/ScreenPlaceholder";
 import { DashboardScreen } from "./features/dashboard/DashboardScreen";
+import { ReviewScreen } from "./features/ingestion/ReviewScreen";
+import { UploadScreen } from "./features/ingestion/UploadScreen";
 import { Playground } from "./playground/Playground";
 
 const apiClient = new MockApiClient();
@@ -24,7 +26,8 @@ const router = createBrowserRouter([
       { path: "biomarkers", element: <ScreenPlaceholder title="Biomarkers" /> },
       { path: "scores", element: <ScreenPlaceholder title="Scores" /> },
       { path: "insights", element: <ScreenPlaceholder title="Insights" /> },
-      { path: "upload", element: <ScreenPlaceholder title="Upload" /> },
+      { path: "upload", element: <UploadScreen /> },
+      { path: "review/:extractionId", element: <ReviewScreen /> },
       { path: "settings", element: <ScreenPlaceholder title="Settings" /> },
     ],
   },

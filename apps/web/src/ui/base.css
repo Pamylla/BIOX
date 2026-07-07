@@ -39,6 +39,9 @@ button {
 .f1 {
   flex: 1;
 }
+.clip {
+  overflow: hidden;
+}
 .gap8 {
   gap: 8px;
 }

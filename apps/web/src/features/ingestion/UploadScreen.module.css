@@ -1,0 +1,99 @@
+/* Prototype: .drop / .drop-ic / .drop-t / .drop-s / .filei / .upstat */
+.drop {
+  border: 2px dashed var(--wire);
+  border-radius: 18px;
+  padding: 54px 30px;
+  text-align: center;
+  background: #fff;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+  display: block;
+  width: 100%;
+  font-family: inherit;
+}
+.drop:hover {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+}
+
+.dropIc {
+  width: 64px;
+  height: 64px;
+  border-radius: 17px;
+  background: var(--brand-soft);
+  color: var(--brand);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 18px;
+}
+
+.dropT {
+  font: 600 19px "Space Grotesk";
+  letter-spacing: -0.01em;
+}
+
+.dropS {
+  color: var(--ink-2);
+  font-size: 13.5px;
+  margin-top: 7px;
+}
+
+.dropBtn {
+  margin-top: 20px;
+  pointer-events: none;
+}
+
+.filei {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--surface-2);
+  color: var(--ink-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+
+.fileName {
+  font-weight: 600;
+}
+
+.sizeCell {
+  font-size: 12.5px;
+}
+
+.upstat {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font: 600 11.5px "IBM Plex Sans";
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.analyzed {
+  background: var(--good-soft);
+  color: var(--good-ink);
+}
+.needsReview {
+  background: var(--watch-soft);
+  color: var(--watch-ink);
+}
+.processing {
+  background: var(--surface-2);
+  color: var(--ink-2);
+}
+.failed {
+  background: var(--alert-soft);
+  color: var(--alert);
+}
+
+.rowLink {
+  cursor: pointer;
+}
+.rowLink:hover td {
+  background: var(--surface-2);
+}
