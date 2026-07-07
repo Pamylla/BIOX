@@ -1,0 +1,36 @@
+/* Prototype: .pill + tone modifiers */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font: 600 11.5px "IBM Plex Sans";
+  white-space: nowrap;
+}
+
+.good {
+  background: var(--good-soft);
+  color: var(--good-ink);
+}
+.watch {
+  background: var(--watch-soft);
+  color: var(--watch-ink);
+}
+.alert {
+  background: var(--alert-soft);
+  color: var(--alert);
+}
+.ai {
+  background: var(--ai-soft);
+  color: var(--ai);
+}
+.blue {
+  background: var(--blue-soft);
+  color: var(--blue);
+}
+.ink {
+  background: var(--surface-2);
+  color: var(--ink-2);
+  border: 1px solid var(--line);
+}

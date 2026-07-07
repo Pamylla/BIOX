@@ -1,0 +1,42 @@
+/*
+ * Global base styles — mirrors the prototype's global rules
+ * (docs/03-design/prototype-source.html). Component-scoped styles live in
+ * CSS Modules next to each primitive; only true globals belong here.
+ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--surface-2);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Typography utilities (prototype classes, kept with the same names) */
+.disp {
+  font-family: "Space Grotesk", sans-serif;
+}
+.mono {
+  font-family: "IBM Plex Mono", monospace;
+}
+.muted {
+  color: var(--ink-2);
+}
+.faint {
+  color: var(--ink-3);
+}
+.k {
+  font: 600 10.5px "IBM Plex Mono";
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}

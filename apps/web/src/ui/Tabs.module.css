@@ -1,0 +1,31 @@
+/* Prototype: .tabs / .tab / .tab.on */
+.tabs {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  padding: 4px;
+  border-radius: 12px;
+}
+
+.tab {
+  padding: 8px 17px;
+  border-radius: 9px;
+  font: 600 13px "IBM Plex Sans";
+  color: var(--ink-2);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+}
+.tab:hover {
+  color: var(--ink);
+}
+
+.on {
+  background: #fff;
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.09);
+}
+.on:hover {
+  color: var(--ink);
+}

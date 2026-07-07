@@ -1,0 +1,17 @@
+/* Prototype: .link */
+.link {
+  color: var(--brand-ink);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  padding: 0;
+}
+.link:hover {
+  text-decoration: underline;
+}

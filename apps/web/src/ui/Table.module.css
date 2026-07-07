@@ -1,0 +1,26 @@
+/* Prototype: .table */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.table th {
+  text-align: left;
+  font: 600 9.5px "IBM Plex Mono";
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.table td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--line-2);
+  vertical-align: middle;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
