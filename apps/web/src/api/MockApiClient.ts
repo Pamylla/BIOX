@@ -269,10 +269,24 @@ export class MockApiClient implements ApiClient {
     const system = fixture.relatedScoreKey;
     const history = SCORE_FIXTURES[system].history;
     const scoreValue = history[history.length - 1] ?? 0;
+    const lastIndex = BATCH_FIXTURES.length - 1;
     return {
       ...this.insightSummary(insightId),
       body: fixture.body,
       grounding: { readings: fixture.groundingReadings, knowledge: fixture.groundingKnowledge },
+      relatedBiomarkers: fixture.markerKeys.map((key) => {
+        const marker = this.marker(key);
+        const value = marker.series[lastIndex] ?? null;
+        const flag =
+          value !== null ? flagOf(value, marker) : { status: "none" as FlagStatus, label: "" };
+        return {
+          biomarkerKey: marker.key,
+          displayName: marker.name,
+          status: flag.status,
+          valueDisplay:
+            value !== null ? `${formatValue(value, marker.decimals)} ${marker.unit}` : "—",
+        };
+      }),
       relatedScore: {
         systemKey: system,
         label: systemLabelOf(system),

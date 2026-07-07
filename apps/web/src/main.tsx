@@ -12,6 +12,8 @@ import { BiomarkersScreen } from "./features/biomarkers/BiomarkersScreen";
 import { DashboardScreen } from "./features/dashboard/DashboardScreen";
 import { ReviewScreen } from "./features/ingestion/ReviewScreen";
 import { UploadScreen } from "./features/ingestion/UploadScreen";
+import { InsightDetailScreen } from "./features/insights/InsightDetailScreen";
+import { InsightsScreen } from "./features/insights/InsightsScreen";
 import { ScoreDetailScreen } from "./features/scores/ScoreDetailScreen";
 import { ScoresScreen } from "./features/scores/ScoresScreen";
 import { TimelineScreen } from "./features/timeline/TimelineScreen";
@@ -32,7 +34,8 @@ const router = createBrowserRouter([
       { path: "biomarkers/:biomarkerKey", element: <BiomarkerDetailScreen /> },
       { path: "scores", element: <ScoresScreen /> },
       { path: "scores/:system", element: <ScoreDetailScreen /> },
-      { path: "insights", element: <ScreenPlaceholder title="Insights" /> },
+      { path: "insights", element: <InsightsScreen /> },
+      { path: "insights/:insightId", element: <InsightDetailScreen /> },
       { path: "upload", element: <UploadScreen /> },
       { path: "review/:extractionId", element: <ReviewScreen /> },
       { path: "settings", element: <ScreenPlaceholder title="Settings" /> },

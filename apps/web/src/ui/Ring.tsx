@@ -12,7 +12,8 @@ import styles from "./Ring.module.css";
  * r=62 → C≈389.6). Other sizes fall back to proportional geometry.
  */
 const PRESETS: Record<number, { box: number; r: number; strokeWidth: number }> = {
-  48: { box: 64, r: 26, strokeWidth: 7 }, // sidebar "related score" — 60px geometry scaled down
+  44: { box: 64, r: 26, strokeWidth: 7 }, // insight detail "related score"
+  48: { box: 64, r: 26, strokeWidth: 7 }, // biomarker detail "related score"
   60: { box: 64, r: 26, strokeWidth: 7 },
   120: { box: 140, r: 58, strokeWidth: 11 }, // score detail hero — 140px geometry scaled down
   140: { box: 140, r: 58, strokeWidth: 11 },

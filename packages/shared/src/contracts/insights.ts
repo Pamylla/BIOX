@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { insightToneSchema, scoreStatusSchema, systemKeySchema } from "./enums";
+import { flagStatusSchema, insightToneSchema, scoreStatusSchema, systemKeySchema } from "./enums";
 
 /**
  * Insight — AI-generated, leaf read-only, always labeled as AI in the UI.
@@ -32,6 +32,15 @@ export const insightDetailSchema = insightSummarySchema.extend({
     readings: z.string(),
     knowledge: z.string(),
   }),
+  /** Sidebar rows: the cited markers with their current state. */
+  relatedBiomarkers: z.array(
+    z.object({
+      biomarkerKey: z.string(),
+      displayName: z.string(),
+      status: flagStatusSchema,
+      valueDisplay: z.string(),
+    }),
+  ),
   relatedScore: z
     .object({
       systemKey: systemKeySchema,
