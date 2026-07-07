@@ -14,54 +14,73 @@ BIOX is an educational and portfolio project. It does **not** provide medical ad
 
 Instead of showing isolated laboratory values, BIOX helps users understand the **evolution** of their health data:
 
-- 📈 **Historical timeline** — every exam becomes part of an evolving health history
+- 📄 **Document ingestion** — LLM-based extraction from lab report PDFs, always confirmed by human review
+- 📈 **Historical timeline** — every confirmed report becomes a snapshot in an evolving health history
 - 🔬 **Biomarker tracking** — trends and relationships between biomarkers over time
-- 🧮 **Deterministic scores** — medical scores calculated by code, never by AI
-- 🤖 **AI-assisted explanations** — natural-language summaries grounded in curated medical knowledge (RAG post-MVP)
-- 📄 **Document processing** — parser-based extraction from lab report PDFs (OCR post-MVP)
+- 🧮 **Deterministic scores** — health scores computed in code, frozen with a `formulaVersion`, never by AI
+- 🤖 **AI-assisted insights** — natural-language explanations grounded in curated knowledge; AI explains, it never diagnoses
 
 ## Engineering principles
 
 - **Clean Architecture + DDD** — independent domains, separation of concerns
-- **Deterministic core** — business calculations always produce deterministic results
+- **Deterministic core** — business calculations live in `packages/shared`, framework-free and fully tested
 - **AI as an assistant** — AI explains, summarizes, and correlates; it never calculates medical scores or executes business rules
 - **Documentation first** — important features are documented before implementation; decisions are recorded as ADRs
-- **Type safety** — TypeScript everywhere, strong types over convenience
+- **Type safety** — TypeScript strict everywhere (`noUncheckedIndexedAccess` included)
 
 ## Tech stack
 
-| Layer          | Technology                                                         |
-| -------------- | ------------------------------------------------------------------ |
-| Frontend       | React, Next.js, TypeScript                                         |
-| Backend        | NestJS or Next.js Route Handlers + worker (ADR-007), TypeScript    |
-| Database       | PostgreSQL, Prisma ORM                                             |
-| Auth & Storage | Firebase                                                           |
-| AI             | LLM integration, Prompt Engineering (RAG & Vector Search post-MVP) |
-| Documents      | PDF parser (OCR post-MVP)                                          |
-| Delivery       | Docker, CI/CD                                                      |
+| Layer    | Technology                                                       |
+| -------- | ---------------------------------------------------------------- |
+| Web      | Vite + React 18 (SPA), React Router, CSS Modules + design tokens |
+| API      | NestJS, Prisma, pg-boss (in-process workers)                     |
+| Database | PostgreSQL                                                       |
+| Auth     | Firebase Auth (Google + email/password)                          |
+| AI       | Anthropic API — extraction + insights, versioned prompts         |
+| Storage  | Local disk (dev) / S3-compatible — Cloudflare R2 (prod)          |
+| Tooling  | pnpm workspaces, ESLint, Prettier, Vitest, GitHub Actions        |
 
-## Project structure
+## Repository layout
 
 ```
-BIOX/
-├── .biox/                 # Product & architecture source of truth
-│   └── project.md
-├── docs/
-│   ├── 01-product/        # Vision, product requirements, roadmap
-│   ├── 02-domain/         # Domain model (DDD ubiquitous language)
-│   └── 03-architecture/   # Architecture docs + ADRs
-├── README.md
-├── LICENSE
-└── .gitignore
+biox/
+├── apps/
+│   ├── web/          # Vite + React SPA
+│   └── api/          # NestJS API + workers
+├── packages/
+│   └── shared/       # deterministic core: extraction, catalog, engines (framework-free)
+├── docs/             # product, domain, architecture (ADRs), implementation plan
+└── .biox/project.md  # product & architecture source of truth
 ```
 
-> **Status:** greenfield — the project is currently in the documentation and design phase. Application code will be scaffolded next.
+## Getting started
+
+Requirements: Node ≥ 20, pnpm ≥ 9.
+
+```sh
+pnpm install
+pnpm dev        # web (Vite) + api (NestJS) in parallel
+```
+
+Environment: copy `apps/api/.env.example` → `apps/api/.env` and `apps/web/.env.example` → `apps/web/.env`, then fill in the values.
+
+Other scripts (run from the root):
+
+```sh
+pnpm build         # build all workspaces
+pnpm test          # run all test suites (Vitest)
+pnpm typecheck     # tsc --noEmit everywhere
+pnpm lint          # ESLint
+pnpm format        # Prettier --write
+```
+
+> **Status:** Phase 0 (repository foundation) — see [docs/implementation-plan.md](docs/implementation-plan.md) for the full roadmap.
 
 ## Git workflow
 
-- `main` — stable
-- `develop` — integration
-- `feature/*`, `fix/*`, `docs/*`, `chore/*` — working branches
+- `main` — stable (release only)
+- `develop` — integration; PRs target this branch
+- `feat/*`, `fix/*`, `docs/*`, `chore/*` — working branches
 - Commits follow [Conventional Commits](https://www.conventionalcommits.org/): `type(scope): description`
 
 ## License
