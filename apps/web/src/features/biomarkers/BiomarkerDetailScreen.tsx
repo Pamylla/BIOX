@@ -1,7 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
-import type { BiomarkerSeries, ScoreStatus } from "@biox/shared/contracts";
+import type { BiomarkerSeries } from "@biox/shared/contracts";
 import { useBiomarkerSeries } from "../../api";
 import { formatDate } from "../../lib/format";
+import { SCORE_STATUS_LABEL, scoreTone } from "../../lib/scores";
 import {
   Button,
   Card,
@@ -17,20 +18,8 @@ import {
   Table,
   Trend,
   trendArrow,
-  type FlagTone,
 } from "../../ui";
 import styles from "./BiomarkerDetailScreen.module.css";
-
-const SCORE_STATUS_LABEL: Record<ScoreStatus, string> = {
-  excellent: "Excellent",
-  good: "Good",
-  watch: "Watch",
-  alert: "Alert",
-};
-
-function scoreTone(status: ScoreStatus): FlagTone {
-  return status === "excellent" ? "good" : status;
-}
 
 export function BiomarkerDetailScreen() {
   const navigate = useNavigate();

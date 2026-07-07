@@ -14,6 +14,7 @@ import styles from "./Ring.module.css";
 const PRESETS: Record<number, { box: number; r: number; strokeWidth: number }> = {
   48: { box: 64, r: 26, strokeWidth: 7 }, // sidebar "related score" — 60px geometry scaled down
   60: { box: 64, r: 26, strokeWidth: 7 },
+  120: { box: 140, r: 58, strokeWidth: 11 }, // score detail hero — 140px geometry scaled down
   140: { box: 140, r: 58, strokeWidth: 11 },
   150: { box: 150, r: 62, strokeWidth: 12 },
 };
