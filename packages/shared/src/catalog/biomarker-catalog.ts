@@ -13,7 +13,7 @@
  * throws when the catalog is built.
  */
 
-import type { BiomarkerCatalogPort } from "../parser/biomarker-catalog.port";
+import type { BiomarkerCatalogPort } from "../extraction/biomarker-catalog.port";
 import type { BiomarkerDefinition } from "./biomarker.types";
 import { BIOMARKER_SEED } from "./biomarker-catalog.data";
 
@@ -44,9 +44,7 @@ function normalizeAlias(s: string): string {
  * canonical name + synonyms). Throws on duplicate codes or ambiguous aliases so
  * curation errors surface at startup, not at parse time.
  */
-export function createBiomarkerCatalog(
-  seed: BiomarkerDefinition[],
-): BiomarkerCatalog {
+export function createBiomarkerCatalog(seed: BiomarkerDefinition[]): BiomarkerCatalog {
   const byCode = new Map<string, BiomarkerDefinition>();
   const codeByAlias = new Map<string, string>();
 
@@ -73,7 +71,7 @@ export function createBiomarkerCatalog(
     findByCode: (code) => byCode.get(code) ?? null,
     findBySynonym: (name) => {
       const code = codeByAlias.get(normalizeAlias(name));
-      return code === undefined ? null : byCode.get(code) ?? null;
+      return code === undefined ? null : (byCode.get(code) ?? null);
     },
     all: () => [...seed],
   };

@@ -14,18 +14,13 @@
 // `plausibleMagnitude` is a parsing-safety concept (see magnitude.ts), not
 // clinical data, so its type is owned by the parser module. This cross-module
 // type import moves to the planned shared-types package once it exists (ADR-007).
-import type { PlausibleMagnitude } from "../parser/magnitude";
+import type { PlausibleMagnitude } from "../extraction/magnitude";
 
 /** Where a marker comes from. */
 export type BiomarkerType = "laboratory" | "anthropometric";
 
 /** The five scoring domains. */
-export type Domain =
-  | "Inflammation"
-  | "Iron"
-  | "Metabolic"
-  | "Thyroid"
-  | "Cardiovascular";
+export type Domain = "Inflammation" | "Iron" | "Metabolic" | "Thyroid" | "Cardiovascular";
 
 /** How to read the value clinically (the sense of the reading, not the numbers). */
 export type Direction = "high_bad" | "low_bad" | "range" | "context";

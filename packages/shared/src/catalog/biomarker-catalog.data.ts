@@ -117,7 +117,12 @@ export const BIOMARKER_SEED: BiomarkerDefinition[] = [
   {
     code: "tsh",
     canonicalName: "Thyroid-Stimulating Hormone",
-    synonyms: ["TSH", "hormônio tireoestimulante", "tirotrofina", "hormônio tireoestimulante ultrassensível"],
+    synonyms: [
+      "TSH",
+      "hormônio tireoestimulante",
+      "tirotrofina",
+      "hormônio tireoestimulante ultrassensível",
+    ],
     primaryDomain: "Thyroid",
     secondaryDomains: [],
     direction: "range",

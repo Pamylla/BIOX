@@ -1,9 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { toCanonical } from "./unit-conversion";
-import type {
-  BiomarkerCatalogPort,
-  CatalogEntry,
-} from "./biomarker-catalog.port";
+import type { BiomarkerCatalogPort, CatalogEntry } from "./biomarker-catalog.port";
 
 // Synthetic in-memory catalog. Canonical units and conversion pairs are
 // illustrative of the SHAPE the port carries — not curated clinical data.
