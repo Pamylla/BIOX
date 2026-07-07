@@ -24,6 +24,14 @@ export function formatMonth(iso: string): string {
   return MONTH_FORMAT.format(new Date(`${iso.slice(0, 10)}T12:00:00Z`));
 }
 
+const MONTH_SHORT_FORMAT = new Intl.DateTimeFormat("en-GB", { month: "short" });
+
+/** "2025-03-15" → "Mar '25" (trend card axis labels). */
+export function formatMonthYear(iso: string): string {
+  const date = new Date(`${iso.slice(0, 10)}T12:00:00Z`);
+  return `${MONTH_SHORT_FORMAT.format(date)} '${iso.slice(2, 4)}`;
+}
+
 /** Snapshot sequence as the UI shows it: 4 → "04". */
 export function formatSequence(sequence: number): string {
   return String(sequence).padStart(2, "0");

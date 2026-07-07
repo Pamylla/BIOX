@@ -10,6 +10,7 @@ import { ScreenPlaceholder } from "./app/ScreenPlaceholder";
 import { DashboardScreen } from "./features/dashboard/DashboardScreen";
 import { ReviewScreen } from "./features/ingestion/ReviewScreen";
 import { UploadScreen } from "./features/ingestion/UploadScreen";
+import { TimelineScreen } from "./features/timeline/TimelineScreen";
 import { Playground } from "./playground/Playground";
 
 const apiClient = new MockApiClient();
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       { index: true, element: <DashboardScreen /> },
-      { path: "timeline", element: <ScreenPlaceholder title="Timeline" /> },
+      { path: "timeline", element: <TimelineScreen /> },
       { path: "biomarkers", element: <ScreenPlaceholder title="Biomarkers" /> },
       { path: "scores", element: <ScreenPlaceholder title="Scores" /> },
       { path: "insights", element: <ScreenPlaceholder title="Insights" /> },

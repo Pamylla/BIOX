@@ -1,0 +1,209 @@
+/* Prototype: .tl-spine / .snapcard / .snapdotbig / .snap-date / .snap-score /
+   .cmp-cols / .cmp-hd / .deltacell / .trend-grid / .trendcard */
+.tabs {
+  margin-bottom: 24px;
+}
+
+/* --- Snapshots ------------------------------------------------------------ */
+.spine {
+  position: relative;
+  padding-left: 32px;
+}
+.spine::before {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 14px;
+  bottom: 14px;
+  width: 2px;
+  background: var(--line);
+}
+
+.snapcard {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.snapcard + .snapcard {
+  margin-top: 16px;
+}
+
+.snapdotbig {
+  position: absolute;
+  left: -32px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--brand);
+  border: 3px solid var(--surface-2);
+  box-shadow: 0 0 0 1.5px var(--brand);
+}
+
+.snapNum {
+  font-size: 12px;
+}
+.tagPill {
+  font-size: 10px;
+  padding: 2px 8px;
+}
+.snapDate {
+  font: 600 19px "Space Grotesk";
+  letter-spacing: -0.01em;
+  margin-top: 3px;
+}
+.snapSource {
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.snapScore {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: var(--surface-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.snapScore b {
+  font: 600 21px "Space Grotesk";
+}
+.snapScore span {
+  font: 600 8px "IBM Plex Mono";
+  letter-spacing: 0.08em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+}
+
+/* --- Compare ---------------------------------------------------------------- */
+.cmpCols {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 2px;
+  background: #fff;
+}
+.cmpHd {
+  padding: 15px 18px;
+  border-bottom: 1px solid var(--line);
+}
+.cmpHdB {
+  background: var(--surface-2);
+}
+.cmpKick {
+  font: 500 11px "IBM Plex Mono";
+  color: var(--ink-3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.cmpKickLatest {
+  color: var(--brand);
+}
+.cmpDate {
+  font-size: 16px;
+  margin-top: 3px;
+}
+.cmpSelect {
+  display: block;
+  margin-top: 6px;
+  font: 500 12px "IBM Plex Mono";
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 5px 8px;
+  max-width: 100%;
+}
+
+.valueA {
+  font-weight: 400;
+}
+.valueB {
+  font-weight: 600;
+}
+
+.deltacell {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font: 600 13px "IBM Plex Mono";
+  padding: 3px 9px;
+  border-radius: 7px;
+}
+.deltaGood {
+  background: var(--good-soft);
+  color: var(--good-ink);
+}
+.deltaWatch {
+  background: var(--watch-soft);
+  color: var(--watch-ink);
+}
+.deltaAlert {
+  background: var(--alert-soft);
+  color: var(--alert);
+}
+.deltaNone {
+  color: var(--ink-3);
+  padding-left: 0;
+}
+
+.cmpLegend {
+  font-size: 12.5px;
+  margin-top: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* --- Trends ----------------------------------------------------------------- */
+.trendGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.trendcard {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 20px;
+}
+.trendcard:hover {
+  border-color: var(--wire-2);
+}
+.trendSub {
+  font-size: 12.5px;
+  margin-top: 3px;
+}
+.trendWordGood {
+  color: var(--good-ink);
+}
+.trendWordWatch {
+  color: var(--watch-ink);
+}
+.trendWordAlert {
+  color: var(--alert);
+}
+.trendSpark {
+  margin-top: 14px;
+}
+.trendAxis {
+  font-size: 10px;
+  margin-top: 6px;
+}
+
+.emptyNote {
+  text-align: center;
+  padding: 40px 20px;
+}
