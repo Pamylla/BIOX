@@ -7,6 +7,7 @@ import "./ui/base.css";
 import { ApiProvider, MockApiClient } from "./api";
 import { AppLayout } from "./app/AppLayout";
 import { ScreenPlaceholder } from "./app/ScreenPlaceholder";
+import { DashboardScreen } from "./features/dashboard/DashboardScreen";
 import { Playground } from "./playground/Playground";
 
 const apiClient = new MockApiClient();
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
     path: "/",
     element: <AppLayout />,
     children: [
-      { index: true, element: <ScreenPlaceholder title="Dashboard" /> },
+      { index: true, element: <DashboardScreen /> },
       { path: "timeline", element: <ScreenPlaceholder title="Timeline" /> },
       { path: "biomarkers", element: <ScreenPlaceholder title="Biomarkers" /> },
       { path: "scores", element: <ScreenPlaceholder title="Scores" /> },

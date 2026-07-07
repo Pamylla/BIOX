@@ -82,6 +82,26 @@ button {
   max-width: 640px;
   line-height: 1.5;
 }
+.sec-h {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 34px 0 15px;
+}
+
+/* Ring center typography (prototype .ringnum / .ringof / .sringn) */
+.ringnum {
+  font: 600 44px/1 "Space Grotesk";
+  letter-spacing: -0.02em;
+}
+.ringof {
+  font: 500 12px "IBM Plex Mono";
+  color: var(--ink-3);
+  margin-top: 2px;
+}
+.sringn {
+  font: 600 18px "Space Grotesk";
+}
 
 /* Typography utilities (prototype classes, kept with the same names) */
 .disp {

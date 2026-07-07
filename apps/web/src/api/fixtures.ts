@@ -400,6 +400,19 @@ export const INSIGHT_FIXTURES: InsightFixture[] = [
     groundingKnowledge: "Curated lipid-panel notes: how LDL/HDL balance is typically read.",
   },
   {
+    id: "insight-inflammation-low",
+    title: "Inflammation markers look quiet",
+    tone: "good",
+    summary: "CRP fell from 2.8 to 0.9 mg/L across your snapshots and ESR stayed low.",
+    body: "C-reactive protein dropped consistently across your four snapshots (2.8 → 2.2 → 1.4 → 0.9 mg/L, target < 3.0) and ESR is at 11 mm/h against a < 15 reference. Low, stable inflammatory markers are generally a reassuring pattern in routine labs. Educational only.",
+    markerKeys: ["crp", "esr"],
+    relatedScoreKey: "inflammation",
+    createdAt: "2026-06-14",
+    readAt: null,
+    groundingReadings: "CRP and ESR across snapshots 01–04, with report targets.",
+    groundingKnowledge: "Curated inflammation notes: what CRP and ESR commonly reflect.",
+  },
+  {
     id: "insight-glucose-watch",
     title: "Glucose is drifting toward the upper range",
     tone: "watch",
@@ -412,19 +425,6 @@ export const INSIGHT_FIXTURES: InsightFixture[] = [
     readAt: null,
     groundingReadings: "Fasting Glucose and HbA1c across snapshots 01–04, with report ranges.",
     groundingKnowledge: "Curated glucose-metabolism notes: fasting glucose and HbA1c basics.",
-  },
-  {
-    id: "insight-inflammation-low",
-    title: "Inflammation markers look quiet",
-    tone: "good",
-    summary: "CRP fell from 2.8 to 0.9 mg/L across your snapshots and ESR stayed low.",
-    body: "C-reactive protein dropped consistently across your four snapshots (2.8 → 2.2 → 1.4 → 0.9 mg/L, target < 3.0) and ESR is at 11 mm/h against a < 15 reference. Low, stable inflammatory markers are generally a reassuring pattern in routine labs. Educational only.",
-    markerKeys: ["crp", "esr"],
-    relatedScoreKey: "inflammation",
-    createdAt: "2026-06-14",
-    readAt: null,
-    groundingReadings: "CRP and ESR across snapshots 01–04, with report targets.",
-    groundingKnowledge: "Curated inflammation notes: what CRP and ESR commonly reflect.",
   },
   {
     id: "insight-thyroid-ok",
@@ -445,6 +445,7 @@ export interface ActivityFixture {
   id: string;
   type: "batch.created" | "insights.generated" | "flag.crossed" | "score.changed";
   title: string;
+  detail: string | null;
   createdAt: string;
 }
 
@@ -452,25 +453,29 @@ export const ACTIVITY_FIXTURES: ActivityFixture[] = [
   {
     id: "act-1",
     type: "batch.created",
-    title: "Snapshot 04 created from Fleury report",
+    title: "Snapshot 04 created",
+    detail: "fleury-panel-jun-2026.pdf",
     createdAt: "2026-06-14",
   },
   {
     id: "act-2",
     type: "insights.generated",
-    title: "4 insights generated for Snapshot 04",
+    title: "3 new insights generated",
+    detail: null,
     createdAt: "2026-06-14",
   },
   {
     id: "act-3",
     type: "flag.crossed",
-    title: "LDL Cholesterol crossed above target",
+    title: "LDL crossed above target",
+    detail: "134 → 141 mg/dL",
     createdAt: "2026-06-14",
   },
   {
     id: "act-4",
     type: "score.changed",
-    title: "Cardiovascular score changed −3 since Snapshot 03",
+    title: "Cardiovascular score dropped 3 points",
+    detail: "75 → 72",
     createdAt: "2026-06-14",
   },
 ];

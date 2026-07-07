@@ -11,6 +11,19 @@ export function formatDate(iso: string): string {
   return DATE_FORMAT.format(new Date(`${iso.slice(0, 10)}T12:00:00Z`));
 }
 
+const DATE_SHORT_FORMAT = new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short" });
+const MONTH_FORMAT = new Intl.DateTimeFormat("en-GB", { month: "long" });
+
+/** "2026-06-14" → "14 Jun". */
+export function formatDateShort(iso: string): string {
+  return DATE_SHORT_FORMAT.format(new Date(`${iso.slice(0, 10)}T12:00:00Z`));
+}
+
+/** "2026-01-09" → "January". */
+export function formatMonth(iso: string): string {
+  return MONTH_FORMAT.format(new Date(`${iso.slice(0, 10)}T12:00:00Z`));
+}
+
 /** Snapshot sequence as the UI shows it: 4 → "04". */
 export function formatSequence(sequence: number): string {
   return String(sequence).padStart(2, "0");

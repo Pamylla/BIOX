@@ -13,6 +13,8 @@ export const activityEventSchema = z.object({
   id: z.string(),
   type: activityTypeSchema,
   title: z.string(),
+  /** Secondary caption ("labs-jun-2026.pdf", "132 → 141 mg/dL"). */
+  detail: z.string().nullable(),
   createdAt: z.string(),
 });
 export type ActivityEvent = z.infer<typeof activityEventSchema>;
