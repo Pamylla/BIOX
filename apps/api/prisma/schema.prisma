@@ -1,0 +1,267 @@
+// BIOX data model — implementation-plan.md §9.
+// Ubiquitous Language: Extraction / Batch / Measurement (never "Exam"/"Result").
+// Fields marked ◆ in the plan were validated against real lab reports and are
+// mandatory. Reference ranges live PER MEASUREMENT, from the report (ADR-002).
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SexAtBirth {
+  female
+  male
+}
+
+enum ExtractionStatus {
+  processing
+  needs_review
+  confirmed
+  discarded
+  failed
+}
+
+enum Confidence {
+  high
+  medium
+  low
+}
+
+enum Plausibility {
+  ok
+  out_of_magnitude
+}
+
+enum FlagStatus {
+  good
+  watch
+  alert
+  none
+}
+
+enum ScoreStatus {
+  excellent
+  good
+  watch
+  alert
+}
+
+model User {
+  id                  String      @id @default(uuid())
+  firebaseUid         String      @unique
+  email               String      @unique
+  name                String
+  dateOfBirth         DateTime?
+  sexAtBirth          SexAtBirth?
+  aiProcessingConsent Boolean     @default(true)
+  /// "watch" within 5% of a threshold (§11.1) — user-configurable.
+  flagBorderline      Boolean     @default(true)
+  createdAt           DateTime    @default(now())
+  /// Operational soft-delete; LGPD purge is the second tier.
+  deletedAt           DateTime?
+  purgeScheduledAt    DateTime?
+
+  reports          ReportFile[]
+  extractions      Extraction[]
+  batches          Batch[]
+  insights         Insight[]
+  activityEvents   ActivityEvent[]
+  deletionRequests DeletionRequest[]
+}
+
+model ReportFile {
+  id         String    @id @default(uuid())
+  userId     String
+  storageKey String
+  filename   String
+  sizeBytes  Int
+  pageCount  Int?
+  uploadedAt DateTime  @default(now())
+  deletedAt  DateTime?
+
+  user       User        @relation(fields: [userId], references: [id])
+  extraction Extraction?
+
+  @@index([userId])
+}
+
+model Extraction {
+  id            String           @id @default(uuid())
+  reportFileId  String           @unique
+  userId        String
+  status        ExtractionStatus
+  /// LLM used, e.g. "claude-sonnet-4-6".
+  model         String
+  /// Versioned prompt id, e.g. "extractor-v1".
+  promptVersion String
+  /// Raw LLM response, kept verbatim for auditability.
+  rawOutput     Json
+  /// Collection date detected on the report.
+  reportDate    DateTime?
+  performingLab String? // ◆
+  error         String?
+  createdAt     DateTime         @default(now())
+  confirmedAt   DateTime?
+
+  reportFile ReportFile       @relation(fields: [reportFileId], references: [id])
+  user       User             @relation(fields: [userId], references: [id])
+  items      ExtractionItem[]
+  batch      Batch?
+
+  @@index([userId])
+}
+
+model ExtractionItem {
+  id             String       @id @default(uuid())
+  extractionId   String
+  /// The label exactly as printed on the report.
+  rawLabel       String
+  /// Resolved against the shared catalog; null = unrecognized, fixable in review.
+  biomarkerKey   String?
+  value          Decimal?
+  valueQualifier String? // ◆ "<", ">", "≤", "≥"
+  valueLabel     String? // ◆ serology, e.g. "Non-reactive"
+  unit           String?
+  refLow         Decimal?
+  refHigh        Decimal?
+  lowInclusive   Boolean? // ◆
+  highInclusive  Boolean? // ◆
+  /// ◆ Tiered ranges (e.g. desirable / borderline / high).
+  refTiers       Json?
+  /// The range exactly as printed on the report.
+  refRaw         String?
+  assayMethod    String? // ◆ lab assay method — distinct from the extraction method
+  confidence     Confidence
+  /// out_of_magnitude (via catalog plausibleMagnitude) downgrades confidence to low.
+  plausibility   Plausibility @default(ok)
+  editedByUser   Boolean      @default(false)
+
+  extraction Extraction @relation(fields: [extractionId], references: [id])
+
+  @@index([extractionId])
+}
+
+/// UI name: "Snapshot". "Latest" is derived (max collectedAt, not deleted);
+/// "Baseline" is sequence 1 — neither is persisted (§9 note).
+model Batch {
+  id            String    @id @default(uuid())
+  userId        String
+  extractionId  String    @unique
+  /// User-facing snapshot number (01, 02…).
+  sequence      Int
+  /// Collection date, from the report.
+  collectedAt   DateTime
+  performingLab String? // ◆
+  createdAt     DateTime  @default(now())
+  deletedAt     DateTime?
+
+  user         User          @relation(fields: [userId], references: [id])
+  extraction   Extraction    @relation(fields: [extractionId], references: [id])
+  measurements Measurement[]
+  scores       Score[]
+
+  @@unique([userId, sequence])
+  @@index([userId])
+}
+
+model Measurement {
+  id             String     @id @default(uuid())
+  batchId        String
+  /// Logical FK into the shared TypeScript catalog.
+  biomarkerKey   String
+  value          Decimal?
+  valueQualifier String? // ◆
+  valueLabel     String? // ◆
+  unit           String
+  /// ◆ Per-result reference range, from the report (ADR-002) — never a catalog.
+  refLow         Decimal?
+  refHigh        Decimal?
+  lowInclusive   Boolean?
+  highInclusive  Boolean?
+  refTiers       Json?
+  refRaw         String?
+  assayMethod    String?
+  /// Frozen at confirmation by the flag engine.
+  status         FlagStatus
+  /// "In range", "Above target", "No reference provided"…
+  flagLabel      String
+
+  batch Batch @relation(fields: [batchId], references: [id])
+
+  @@unique([batchId, biomarkerKey])
+  @@index([biomarkerKey])
+}
+
+model Score {
+  id             String      @id @default(uuid())
+  batchId        String
+  /// metabolic | cardiovascular | inflammation | hematologic | hepatorenal | thyroid | overall
+  systemKey      String
+  value          Int
+  status         ScoreStatus
+  /// Frozen engine version, e.g. "scores-v1". Recomputes are NEW versions.
+  formulaVersion String
+  /// ◆ The exact measurements used, frozen at confirmation.
+  inputsSnapshot Json
+  frozenAt       DateTime    @default(now())
+
+  batch Batch @relation(fields: [batchId], references: [id])
+
+  @@unique([batchId, systemKey])
+}
+
+/// AI insight — leaf read-only: never writes back into scores or measurements.
+model Insight {
+  id              String     @id @default(uuid())
+  userId          String
+  batchId         String
+  title           String
+  /// Pill tone on the card (good | watch | alert — never none).
+  tone            FlagStatus
+  summary         String
+  body            String
+  markerKeys      String[]
+  relatedScoreKey String?
+  /// What entered the prompt (batches, deltas, curated excerpts) — feeds "Grounded in".
+  groundingMeta   Json
+  model           String
+  promptVersion   String
+  createdAt       DateTime   @default(now())
+  readAt          DateTime?
+  deletedAt       DateTime?
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([batchId])
+}
+
+model ActivityEvent {
+  id        String   @id @default(uuid())
+  userId    String
+  /// batch.created | insights.generated | flag.crossed | score.changed
+  type      String
+  payload   Json
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId, createdAt])
+}
+
+model DeletionRequest {
+  id          String    @id @default(uuid())
+  userId      String
+  requestedAt DateTime  @default(now())
+  /// End of the LGPD grace window (e.g. requestedAt + 7 days).
+  purgeAfter  DateTime
+  completedAt DateTime?
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}

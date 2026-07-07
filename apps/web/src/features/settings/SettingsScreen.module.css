@@ -1,0 +1,96 @@
+/* Prototype: .set-wrap / .set-navitem / .frow / .frow-t / .frow-d */
+.wrap {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.navitem {
+  padding: 10px 14px;
+  border-radius: 10px;
+  font: 600 13.5px "IBM Plex Sans";
+  color: var(--ink-2);
+  cursor: pointer;
+  text-align: left;
+  background: none;
+  border: none;
+  width: 100%;
+  font-family: inherit;
+}
+.navitem:hover {
+  background: var(--surface-2);
+}
+.on {
+  background: var(--brand-soft);
+  color: var(--brand-ink);
+}
+.on:hover {
+  background: var(--brand-soft);
+}
+
+.frow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 17px 0;
+  border-bottom: 1px solid var(--line-2);
+}
+.frow:last-child {
+  border-bottom: none;
+}
+.frowT {
+  font-weight: 600;
+  font-size: 14px;
+}
+.frowD {
+  color: var(--ink-2);
+  font-size: 12.5px;
+  margin-top: 3px;
+  max-width: 360px;
+  line-height: 1.45;
+}
+.danger {
+  color: var(--alert);
+}
+.dangerBtn {
+  color: var(--alert);
+  border-color: var(--alert-soft);
+}
+
+.profileHead {
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line-2);
+}
+.profileAvatar {
+  width: 60px;
+  height: 60px;
+  font-size: 22px;
+}
+.profileName {
+  font-size: 20px;
+  letter-spacing: -0.01em;
+}
+.profileMail {
+  font-size: 13px;
+  margin-top: 3px;
+}
+
+.googleRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line-2);
+}
+.footNote {
+  font-size: 12.5px;
+}

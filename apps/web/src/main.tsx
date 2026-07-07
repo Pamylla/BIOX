@@ -6,17 +6,24 @@ import "./ui/tokens.css";
 import "./ui/base.css";
 import { ApiProvider, MockApiClient } from "./api";
 import { AppLayout } from "./app/AppLayout";
-import { ScreenPlaceholder } from "./app/ScreenPlaceholder";
+import { LoginScreen } from "./features/auth/LoginScreen";
+import { BiomarkerDetailScreen } from "./features/biomarkers/BiomarkerDetailScreen";
+import { BiomarkersScreen } from "./features/biomarkers/BiomarkersScreen";
 import { DashboardScreen } from "./features/dashboard/DashboardScreen";
 import { ReviewScreen } from "./features/ingestion/ReviewScreen";
 import { UploadScreen } from "./features/ingestion/UploadScreen";
+import { InsightDetailScreen } from "./features/insights/InsightDetailScreen";
+import { InsightsScreen } from "./features/insights/InsightsScreen";
+import { ScoreDetailScreen } from "./features/scores/ScoreDetailScreen";
+import { ScoresScreen } from "./features/scores/ScoresScreen";
+import { SettingsScreen } from "./features/settings/SettingsScreen";
 import { TimelineScreen } from "./features/timeline/TimelineScreen";
 import { Playground } from "./playground/Playground";
 
 const apiClient = new MockApiClient();
 
 const router = createBrowserRouter([
-  { path: "/login", element: <ScreenPlaceholder title="Login" /> },
+  { path: "/login", element: <LoginScreen /> },
   { path: "/playground", element: <Playground /> },
   {
     path: "/",
@@ -24,12 +31,15 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <DashboardScreen /> },
       { path: "timeline", element: <TimelineScreen /> },
-      { path: "biomarkers", element: <ScreenPlaceholder title="Biomarkers" /> },
-      { path: "scores", element: <ScreenPlaceholder title="Scores" /> },
-      { path: "insights", element: <ScreenPlaceholder title="Insights" /> },
+      { path: "biomarkers", element: <BiomarkersScreen /> },
+      { path: "biomarkers/:biomarkerKey", element: <BiomarkerDetailScreen /> },
+      { path: "scores", element: <ScoresScreen /> },
+      { path: "scores/:system", element: <ScoreDetailScreen /> },
+      { path: "insights", element: <InsightsScreen /> },
+      { path: "insights/:insightId", element: <InsightDetailScreen /> },
       { path: "upload", element: <UploadScreen /> },
       { path: "review/:extractionId", element: <ReviewScreen /> },
-      { path: "settings", element: <ScreenPlaceholder title="Settings" /> },
+      { path: "settings", element: <SettingsScreen /> },
     ],
   },
 ]);

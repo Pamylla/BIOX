@@ -1,7 +1,9 @@
 import { Controller, Get } from "@nestjs/common";
 import { BIOMARKER_SEED } from "@biox/shared";
+import { Public } from "../auth/auth.decorators";
 
 /** Liveness endpoint: GET /v1/health. */
+@Public()
 @Controller("health")
 export class HealthController {
   @Get()

@@ -1,0 +1,66 @@
+/* Prototype: .codetag / .scores-hero / .score-grid / .scard */
+.codetag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 9px;
+  background: var(--brand-soft);
+  color: var(--brand-ink);
+  font: 600 11.5px "IBM Plex Mono";
+}
+
+.hero {
+  margin-bottom: 24px;
+}
+.heroGrid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 26px;
+  align-items: center;
+}
+.heroStatusRow {
+  margin: 8px 0 10px;
+}
+.heroStatus {
+  font-size: 26px;
+  letter-spacing: -0.02em;
+}
+.heroCopy {
+  font-size: 14px;
+  line-height: 1.55;
+  max-width: 520px;
+  margin: 0;
+}
+
+.scoreGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.scard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 17px 18px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  cursor: pointer;
+  text-align: left;
+  transition:
+    box-shadow 0.14s,
+    border-color 0.14s;
+  font-family: inherit;
+}
+.scard:hover {
+  border-color: var(--wire-2);
+  box-shadow: 0 10px 26px -18px rgba(0, 0, 0, 0.32);
+}
+.scardNm {
+  font: 600 14.5px "Space Grotesk";
+  letter-spacing: -0.01em;
+}
+.scardPill {
+  margin-top: 6px;
+}

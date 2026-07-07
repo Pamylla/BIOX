@@ -1,0 +1,154 @@
+/* Prototype: score detail — reuses .bmd-wrap pattern + .compute-row / .codetag */
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--ink-2);
+  font-weight: 600;
+  font-size: 13px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 18px;
+  font-family: inherit;
+}
+.back:hover {
+  color: var(--ink);
+}
+
+.pageH {
+  margin-bottom: 22px;
+}
+
+.wrap {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 22px;
+  align-items: start;
+}
+.mainCol {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.sideCol {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.heroRingNum {
+  font-size: 38px;
+}
+.heroBlurb {
+  font-size: 14.5px;
+  line-height: 1.55;
+  margin: 10px 0 0;
+}
+
+.codetag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 9px;
+  background: var(--brand-soft);
+  color: var(--brand-ink);
+  font: 600 11.5px "IBM Plex Mono";
+}
+
+.computeCopy {
+  font-size: 13.5px;
+  line-height: 1.55;
+  margin: 8px 0 16px;
+}
+.inputsKick {
+  display: block;
+  margin-bottom: 4px;
+}
+.computeRow {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 13px 0;
+  border: none;
+  border-bottom: 1px solid var(--line-2);
+  cursor: pointer;
+  text-align: left;
+  background: none;
+  width: 100%;
+  font-family: inherit;
+}
+.computeRow:last-child {
+  border-bottom: none;
+}
+.computeNm {
+  font: 600 14px "IBM Plex Sans";
+}
+.computeRow:hover .computeNm {
+  color: var(--brand-ink);
+}
+.computeVal {
+  font-size: 13px;
+}
+.formulaVersion {
+  font-size: 11px;
+  margin-top: 12px;
+  display: block;
+}
+
+.historyHead {
+  margin-bottom: 12px;
+}
+.historyAxis {
+  font-size: 10.5px;
+  margin-top: 2px;
+}
+
+.aiCard {
+  background: var(--ai-soft);
+  border-color: transparent;
+  cursor: pointer;
+}
+.aiHead {
+  margin-bottom: 9px;
+}
+.aiSpark {
+  width: 24px;
+  height: 24px;
+  border-radius: 7px;
+  background: #fff;
+  color: var(--ai);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.aiKick {
+  color: var(--ai);
+}
+.aiTitle {
+  font: 600 14px "Space Grotesk";
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+.aiSummary {
+  font-size: 12.5px;
+  color: var(--ink-2);
+  line-height: 1.45;
+  margin-top: 5px;
+}
+
+.whyCard {
+  background: var(--surface-2);
+  border: none;
+}
+.whyKick {
+  display: block;
+  margin-bottom: 9px;
+}
+.whyText {
+  font-size: 12.5px;
+  line-height: 1.55;
+  margin: 0;
+}

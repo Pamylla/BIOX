@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import type { ActivityEvent, BiomarkerRow, ScoreStatus } from "@biox/shared/contracts";
+import type { ActivityEvent, BiomarkerRow } from "@biox/shared/contracts";
 import { useActivity, useBatches, useBiomarkers, useInsights, useMe, useScores } from "../../api";
 import { formatDate, formatDateShort, formatMonth } from "../../lib/format";
+import { INSIGHT_TONE_LABEL } from "../../lib/labels";
+import { SCORE_STATUS_LABEL, scoreTone } from "../../lib/scores";
 import { useBatchParam } from "../../lib/useBatchParam";
 import {
   Button,
@@ -16,24 +18,9 @@ import {
   StatusDot,
   Trend,
   trendArrow,
-  type FlagTone,
   type IconName,
 } from "../../ui";
 import styles from "./DashboardScreen.module.css";
-
-const SCORE_STATUS_LABEL: Record<ScoreStatus, string> = {
-  excellent: "Excellent",
-  good: "Good",
-  watch: "Watch",
-  alert: "Alert",
-};
-
-/** Score status → visual tone (excellent renders green like good). */
-function scoreTone(status: ScoreStatus): FlagTone {
-  return status === "excellent" ? "good" : status;
-}
-
-const INSIGHT_TONE_LABEL = { good: "Positive", watch: "Watch", alert: "Alert" } as const;
 
 function greetingFor(hour: number): string {
   if (hour < 12) return "Good morning";
