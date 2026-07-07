@@ -1,0 +1,36 @@
+/* Prototype: .btn / .btn-primary / .btn-ghost / .btn-lg */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 9px 15px;
+  border-radius: 10px;
+  font: 600 13.5px "IBM Plex Sans";
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.primary {
+  background: var(--brand);
+  color: #fff;
+}
+.primary:hover {
+  background: var(--brand-ink);
+}
+
+.ghost {
+  background: #fff;
+  border-color: var(--line);
+  color: var(--ink);
+}
+.ghost:hover {
+  border-color: var(--wire-2);
+}
+
+.lg {
+  padding: 12px 20px;
+  font-size: 15px;
+  border-radius: 12px;
+}

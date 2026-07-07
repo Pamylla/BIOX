@@ -1,0 +1,13 @@
+/* Prototype: .av */
+.av {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #12a58e, var(--brand-ink));
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: 600 13px "Space Grotesk";
+  flex: none;
+}

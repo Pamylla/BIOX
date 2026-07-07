@@ -1,0 +1,19 @@
+/* Prototype: .card / .pad / .pad-lg / .ct */
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.pad {
+  padding: 20px 22px;
+}
+.padLg {
+  padding: 26px 28px;
+}
+
+.title {
+  font: 600 16px "Space Grotesk";
+  letter-spacing: -0.01em;
+  margin: 0;
+}
