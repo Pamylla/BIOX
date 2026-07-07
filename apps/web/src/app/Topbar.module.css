@@ -1,0 +1,55 @@
+/* Prototype: .topbar / .snapsel / .snapdot / .tsearch */
+.topbar {
+  height: 60px;
+  flex: none;
+  border-bottom: 1px solid var(--line);
+  background: rgba(245, 244, 239, 0.82);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 28px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.snapsel {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 13px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.snapsel:hover {
+  border-color: var(--wire-2);
+}
+
+.snapdot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--good);
+  flex: none;
+}
+
+.tsearch {
+  flex: 1;
+  max-width: 300px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid var(--line);
+  color: var(--ink-3);
+  font-size: 13px;
+  cursor: not-allowed;
+}
