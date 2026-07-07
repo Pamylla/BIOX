@@ -509,8 +509,8 @@ Tamanhos: **P** ≈ até 1 dia · **M** ≈ 2–4 dias · **G** ≈ 1 semana+ (r
 
 - [x] pnpm workspaces (`apps/web`, `apps/api`, `packages/shared`) + TS strict em tudo (`noUncheckedIndexedAccess` incluso)
 - [x] ESLint + Prettier compartilhados; husky + lint-staged
-- [ ] `docker-compose.yml` com Postgres 16 local *(adiado — infra pulada por ora)*
-- [ ] `apps/api`: NestJS bootstrap + `/v1/health` ✓ · Prisma + pg-boss *(adiado — infra pulada por ora)*
+- [x] `docker-compose.yml` com Postgres 16 local *(retomado na Fase 3)*
+- [ ] `apps/api`: NestJS bootstrap + `/v1/health` ✓ · Prisma ✓ (Fase 3) · pg-boss *(pendente — entra na Fase 4 com o worker)*
 - [x] `apps/web`: Vite + React + Router bootstrap, página placeholder
 - [x] `packages/shared`: build TS, importável pelos dois apps (teste de fumaça)
 - [x] GitHub Actions: lint + typecheck + test + build em PR
@@ -544,7 +544,7 @@ Tamanhos: **P** ≈ até 1 dia · **M** ≈ 2–4 dias · **G** ≈ 1 semana+ (r
 
 ### Fase 3 — Backend núcleo [G]
 
-- [ ] Prisma schema (seção 9) + migration inicial
+- [x] Prisma schema (seção 9) + migration inicial
 - [ ] Módulo auth: guard Firebase Admin (verifica ID token), decorator `@CurrentUser`, provisionamento em `POST /v1/auth/session`
 - [ ] Módulo users: `GET/PATCH /v1/me`
 - [ ] `packages/shared/catalog`: 20 biomarcadores do design com aliases PT + `plausibleMagnitude` (valores chegam da instância claude.ai — placeholder com TODO até lá)
