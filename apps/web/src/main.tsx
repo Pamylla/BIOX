@@ -4,9 +4,12 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./ui/fonts";
 import "./ui/tokens.css";
 import "./ui/base.css";
+import { ApiProvider, MockApiClient } from "./api";
 import { AppLayout } from "./app/AppLayout";
 import { ScreenPlaceholder } from "./app/ScreenPlaceholder";
 import { Playground } from "./playground/Playground";
+
+const apiClient = new MockApiClient();
 
 const router = createBrowserRouter([
   { path: "/login", element: <ScreenPlaceholder title="Login" /> },
@@ -33,6 +36,8 @@ if (!rootEl) {
 
 createRoot(rootEl).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ApiProvider client={apiClient}>
+      <RouterProvider router={router} />
+    </ApiProvider>
   </StrictMode>,
 );

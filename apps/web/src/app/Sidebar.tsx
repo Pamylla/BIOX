@@ -13,7 +13,8 @@ interface NavEntry {
 }
 
 interface SidebarProps {
-  user: { name: string; email: string };
+  /** Undefined while the profile is loading — the footer shows placeholders. */
+  user?: { name: string; email: string };
   /** Unread insights count (§5.11); the badge hides when 0/undefined. */
   insightsBadge?: number;
 }
@@ -83,10 +84,10 @@ export function Sidebar({ user, insightsBadge }: SidebarProps) {
 
       <div className={styles.sfoot}>
         <NavLink to="/settings" className={styles.acct}>
-          <Avatar name={user.name} />
+          <Avatar name={user?.name ?? ""} />
           <div className={styles.acctInfo}>
-            <div className={styles.acctName}>{user.name}</div>
-            <div className={styles.acctMail}>{user.email}</div>
+            <div className={styles.acctName}>{user?.name ?? "—"}</div>
+            <div className={styles.acctMail}>{user?.email ?? "—"}</div>
           </div>
           <Icon name="chevronRight" size={15} className="faint" />
         </NavLink>

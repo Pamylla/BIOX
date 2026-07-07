@@ -1,22 +1,25 @@
 import { Outlet } from "react-router-dom";
+import { useBatches, useInsights, useMe } from "../api";
+import { snapshotLabel } from "../lib/format";
 import { Sidebar } from "./Sidebar";
 import { Topbar } from "./Topbar";
 import styles from "./AppLayout.module.css";
 
-// TODO(phase-2 data layer): user, unread insights count and the snapshot
-// label all come from the ApiClient (MockApiClient first). These stand-ins
-// exist only until that lands — screens must never hardcode counts (§2.4).
-const INTERIM_USER = { name: "Marina Alves", email: "marina.alves@email.com" };
-const INTERIM_SNAPSHOT_LABEL = "Snapshot 04 · 14 Jun 2026";
-const INTERIM_INSIGHTS_BADGE = 3;
-
 /** Authenticated app frame: sidebar + topbar wrapping every screen. */
 export function AppLayout() {
+  const { data: me } = useMe();
+  const { data: insights } = useInsights();
+  const { data: batches } = useBatches();
+
+  const latest = batches?.find((batch) => batch.isLatest);
+
   return (
     <div className={styles.app}>
-      <Sidebar user={INTERIM_USER} insightsBadge={INTERIM_INSIGHTS_BADGE} />
+      <Sidebar user={me} insightsBadge={insights?.unreadCount} />
       <div className={styles.main}>
-        <Topbar snapshotLabel={INTERIM_SNAPSHOT_LABEL} />
+        <Topbar
+          snapshotLabel={latest ? snapshotLabel(latest.sequence, latest.collectedAt) : "Loading…"}
+        />
         <Outlet />
       </div>
     </div>
