@@ -23,6 +23,20 @@ out/
 .env.*
 !.env.example
 
+# Clinical / patient data (NEVER commit real PHI/PII)
+# Prevention at the source: real lab reports and patient data stay local.
+# Anonymization of real data happens in the pipeline documented in data-privacy.md.
+private/
+uploads/
+**/uploads/
+data/private/
+data/real/
+fixtures/real/
+
+# Lab report PDFs — ignore everywhere, allow only curated documentation PDFs
+*.pdf
+!docs/**/*.pdf
+
 # Logs
 logs/
 *.log

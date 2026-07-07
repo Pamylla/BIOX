@@ -1,0 +1,19 @@
+{
+  "name": "biox",
+  "version": "0.0.0",
+  "private": true,
+  "description": "BIOX — health-intelligence platform (monorepo)",
+  "workspaces": [
+    "backend"
+  ],
+  "scripts": {
+    "test": "npm run test -w backend",
+    "test:watch": "npm run test:watch -w backend",
+    "typecheck": "npm run typecheck -w backend"
+  },
+  "devDependencies": {
+    "@types/node": "^20.18.0",
+    "typescript": "^5.6.0",
+    "vitest": "^3.0.0"
+  }
+}
