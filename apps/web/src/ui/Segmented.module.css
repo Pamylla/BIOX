@@ -1,0 +1,25 @@
+/* Prototype: .seg */
+.seg {
+  display: inline-flex;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.option {
+  padding: 8px 15px;
+  font: 600 13px "IBM Plex Sans";
+  border: none;
+  background: #fff;
+  color: var(--ink-2);
+  cursor: pointer;
+  border-left: 1px solid var(--line);
+}
+.option:first-child {
+  border-left: none;
+}
+
+.on {
+  background: var(--brand);
+  color: #fff;
+}

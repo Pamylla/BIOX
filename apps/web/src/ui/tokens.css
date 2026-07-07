@@ -1,0 +1,32 @@
+/*
+ * BIOX design tokens — extracted VERBATIM from the design prototype
+ * (docs/03-design/prototype-source.html). Do not tweak values here; the
+ * prototype is the visual source of truth (implementation-plan.md §2.3).
+ */
+:root {
+  --board: #e7e4de;
+  --ink: #15191c;
+  --ink-2: #565d64;
+  --ink-3: #8b9198;
+  --line: rgba(21, 25, 28, 0.12);
+  --line-2: rgba(21, 25, 28, 0.06);
+  --surface: #fff;
+  --surface-2: #f5f4ef;
+  --brand: #0e7c6b;
+  --brand-ink: #0a5a4f;
+  --brand-soft: #e2f0ed;
+  --ai: #5a4bda;
+  --ai-soft: #ece9fb;
+  --blue: #2f6fdb;
+  --blue-soft: #e4edfb;
+  --good: #2e9e5b;
+  --good-ink: #1f7a45;
+  --good-soft: #e4f3ea;
+  --watch: #c88a0e;
+  --watch-ink: #8a5d05;
+  --watch-soft: #f7edd3;
+  --alert: #d6453d;
+  --alert-soft: #f8e5e3;
+  --wire: #b7bcc0;
+  --wire-2: #7c838a;
+}

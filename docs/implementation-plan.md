@@ -521,11 +521,11 @@ Tamanhos: **P** ≈ até 1 dia · **M** ≈ 2–4 dias · **G** ≈ 1 semana+ (r
 
 ### Fase 1 — Design system [M]
 
-- [ ] `tokens.css` com as custom properties da seção 2.3, verbatim
-- [ ] Fontes self-hosted via `@fontsource` (IBM Plex Sans 400/500/600/700, IBM Plex Mono 400/500/600, Space Grotesk 500/600/700)
-- [ ] Primitivos: `Button` (primary/ghost/lg), `Pill` (good/watch/alert/ai/blue/ink), `Card` (pad/pad-lg), `Table`, `Tabs`, `Toggle`, `Segmented`, `Field/Input`, `StatusDot` (incluindo `none` cinza), `Kicker (.k)`, `Link`, `Avatar`
-- [ ] SVG: `Ring` (props value/size/status; util de dasharray da seção 2.3), `Sparkline` (points normalizados), `RefBand` (posição %, dot por status, oculta se `none`), `Icon` (extrair paths do protótipo p/ sprite/componente único)
-- [ ] Rota `/playground` renderizando tudo lado a lado
+- [x] `tokens.css` com as custom properties da seção 2.3, verbatim
+- [x] Fontes self-hosted via `@fontsource` (IBM Plex Sans 400/500/600/700, IBM Plex Mono 400/500/600, Space Grotesk 500/600/700)
+- [x] Primitivos: `Button` (primary/ghost/lg), `Pill` (good/watch/alert/ai/blue/ink), `Card` (pad/pad-lg), `Table`, `Tabs`, `Toggle`, `Segmented`, `Field/Input`, `StatusDot` (incluindo `none` cinza), `Kicker (.k)`, `Link`, `Avatar`
+- [x] SVG: `Ring` (props value/size/status; util de dasharray da seção 2.3), `Sparkline` (points normalizados), `RefBand` (posição %, dot por status, oculta se `none`), `Icon` (extrair paths do protótipo p/ sprite/componente único)
+- [x] Rota `/playground` renderizando tudo lado a lado
 
 **Aceite:** comparação visual playground × protótipo sem divergência perceptível; tudo tipado; zero estilo inline fora de casos posicionais.
 
