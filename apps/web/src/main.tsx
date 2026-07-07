@@ -6,7 +6,7 @@ import "./ui/tokens.css";
 import "./ui/base.css";
 import { ApiProvider, MockApiClient } from "./api";
 import { AppLayout } from "./app/AppLayout";
-import { ScreenPlaceholder } from "./app/ScreenPlaceholder";
+import { LoginScreen } from "./features/auth/LoginScreen";
 import { BiomarkerDetailScreen } from "./features/biomarkers/BiomarkerDetailScreen";
 import { BiomarkersScreen } from "./features/biomarkers/BiomarkersScreen";
 import { DashboardScreen } from "./features/dashboard/DashboardScreen";
@@ -16,13 +16,14 @@ import { InsightDetailScreen } from "./features/insights/InsightDetailScreen";
 import { InsightsScreen } from "./features/insights/InsightsScreen";
 import { ScoreDetailScreen } from "./features/scores/ScoreDetailScreen";
 import { ScoresScreen } from "./features/scores/ScoresScreen";
+import { SettingsScreen } from "./features/settings/SettingsScreen";
 import { TimelineScreen } from "./features/timeline/TimelineScreen";
 import { Playground } from "./playground/Playground";
 
 const apiClient = new MockApiClient();
 
 const router = createBrowserRouter([
-  { path: "/login", element: <ScreenPlaceholder title="Login" /> },
+  { path: "/login", element: <LoginScreen /> },
   { path: "/playground", element: <Playground /> },
   {
     path: "/",
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
       { path: "insights/:insightId", element: <InsightDetailScreen /> },
       { path: "upload", element: <UploadScreen /> },
       { path: "review/:extractionId", element: <ReviewScreen /> },
-      { path: "settings", element: <ScreenPlaceholder title="Settings" /> },
+      { path: "settings", element: <SettingsScreen /> },
     ],
   },
 ]);

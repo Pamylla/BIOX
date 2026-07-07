@@ -533,11 +533,11 @@ Tamanhos: **P** ≈ até 1 dia · **M** ≈ 2–4 dias · **G** ≈ 1 semana+ (r
 
 - [x] Layout: Sidebar (250px, sticky, grupos Overview/Analysis/Data, badge de insights), Topbar (60px blur, snapshot selector, busca desabilitada com tooltip "coming soon", botões Compare e Upload report), footer da sidebar com conta
 - [x] `ApiClient` (interface tipada pelos contracts) + `MockApiClient` com fixtures = seed Marina (seção 14). **Toda tela consome a interface — nunca fixtures direto**
-- [ ] TanStack Query como camada de dados; roteamento com estados de URL (`?batch=`, abas de timeline/settings em rota ou searchParam)
-- [ ] Telas: Login · Dashboard · Upload · Review · Timeline (3 abas) · Biomarkers · BiomarkerDetail · Scores · ScoreDetail · Insights · InsightDetail · Settings (3 abas)
-- [ ] Estados: skeleton loading, vazio (usuário novo: dashboard vira CTA de upload), erro com retry
-- [ ] Renderização de `valueLabel`/`valueQualifier`/status `none` (seção 5.3–5.4)
-- [ ] Copy fixes das seções 5.2 e 5.5
+- [x] TanStack Query como camada de dados; roteamento com estados de URL (`?batch=`, abas de timeline/settings em rota ou searchParam)
+- [x] Telas: Login · Dashboard · Upload · Review · Timeline (3 abas) · Biomarkers · BiomarkerDetail · Scores · ScoreDetail · Insights · InsightDetail · Settings (3 abas)
+- [x] Estados: skeleton loading, vazio (usuário novo: dashboard vira CTA de upload), erro com retry
+- [x] Renderização de `valueLabel`/`valueQualifier`/status `none` (seção 5.3–5.4)
+- [x] Copy fixes das seções 5.2 e 5.5
 - [ ] Acessibilidade: navegação por teclado nas listas clicáveis, `aria-label` nos ícones, contraste ok
 
 **Aceite:** paridade visual com o protótipo tela a tela; fluxo navegável de ponta a ponta em mock; axe sem violações críticas.

@@ -1,0 +1,160 @@
+/* Prototype: .login / .login-l / .login-tag / .login-feats / .lf / .login-r /
+   .login-card / .ldiv / .disclaimer */
+.login {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.02fr 0.98fr;
+  background: var(--board);
+}
+
+.left {
+  background: var(--ink);
+  color: #fff;
+  padding: 56px 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+.left::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1.2px, transparent 1.2px);
+  background-size: 26px 26px;
+}
+.left > * {
+  position: relative;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+.logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: #fff;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.bname {
+  font: 700 20px/1 "Space Grotesk";
+  letter-spacing: 0.01em;
+}
+.bkick {
+  font: 500 8.5px/1 "IBM Plex Mono";
+  color: rgba(255, 255, 255, 0.55);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+
+.tag {
+  font: 600 40px/1.1 "Space Grotesk";
+  letter-spacing: -0.025em;
+  max-width: 440px;
+  margin: 0;
+}
+
+.feats {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: auto;
+}
+.lf {
+  display: flex;
+  gap: 13px;
+  align-items: flex-start;
+}
+.lfIc {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}
+.lfT {
+  font: 600 15px "IBM Plex Sans";
+}
+.lfS {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+.disclaimer {
+  font-size: 11.5px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.5;
+  max-width: 420px;
+  margin: 26px 0 0;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+}
+
+.card {
+  width: 100%;
+  max-width: 392px;
+}
+.welcome {
+  display: block;
+  margin-bottom: 12px;
+}
+.title {
+  font-size: 27px;
+  letter-spacing: -0.02em;
+  margin: 0 0 26px;
+}
+
+.optionsRow {
+  margin: 14px 0 22px;
+}
+.remember {
+  font-size: 13px;
+  color: var(--ink-2);
+  cursor: pointer;
+}
+
+.w100 {
+  width: 100%;
+}
+
+.ldiv {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 22px 0;
+  color: var(--ink-3);
+  font-size: 12px;
+}
+.ldiv::before,
+.ldiv::after {
+  content: "";
+  height: 1px;
+  background: var(--line);
+  flex: 1;
+}
+
+.signup {
+  font-size: 13px;
+  margin-top: 26px;
+  text-align: center;
+}
