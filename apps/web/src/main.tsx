@@ -7,6 +7,8 @@ import "./ui/base.css";
 import { ApiProvider, MockApiClient } from "./api";
 import { AppLayout } from "./app/AppLayout";
 import { ScreenPlaceholder } from "./app/ScreenPlaceholder";
+import { BiomarkerDetailScreen } from "./features/biomarkers/BiomarkerDetailScreen";
+import { BiomarkersScreen } from "./features/biomarkers/BiomarkersScreen";
 import { DashboardScreen } from "./features/dashboard/DashboardScreen";
 import { ReviewScreen } from "./features/ingestion/ReviewScreen";
 import { UploadScreen } from "./features/ingestion/UploadScreen";
@@ -24,7 +26,8 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <DashboardScreen /> },
       { path: "timeline", element: <TimelineScreen /> },
-      { path: "biomarkers", element: <ScreenPlaceholder title="Biomarkers" /> },
+      { path: "biomarkers", element: <BiomarkersScreen /> },
+      { path: "biomarkers/:biomarkerKey", element: <BiomarkerDetailScreen /> },
       { path: "scores", element: <ScreenPlaceholder title="Scores" /> },
       { path: "insights", element: <ScreenPlaceholder title="Insights" /> },
       { path: "upload", element: <UploadScreen /> },
