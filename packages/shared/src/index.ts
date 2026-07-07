@@ -7,3 +7,4 @@
  */
 export * from "./extraction";
 export * from "./catalog";
+export * from "./contracts";
