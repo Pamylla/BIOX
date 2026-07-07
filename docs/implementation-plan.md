@@ -531,8 +531,8 @@ Tamanhos: **P** ≈ até 1 dia · **M** ≈ 2–4 dias · **G** ≈ 1 semana+ (r
 
 ### Fase 2 — Shell + 12 telas com mock [G]
 
-- [ ] Layout: Sidebar (250px, sticky, grupos Overview/Analysis/Data, badge de insights), Topbar (60px blur, snapshot selector, busca desabilitada com tooltip "coming soon", botões Compare e Upload report), footer da sidebar com conta
-- [ ] `ApiClient` (interface tipada pelos contracts) + `MockApiClient` com fixtures = seed Marina (seção 14). **Toda tela consome a interface — nunca fixtures direto**
+- [x] Layout: Sidebar (250px, sticky, grupos Overview/Analysis/Data, badge de insights), Topbar (60px blur, snapshot selector, busca desabilitada com tooltip "coming soon", botões Compare e Upload report), footer da sidebar com conta
+- [x] `ApiClient` (interface tipada pelos contracts) + `MockApiClient` com fixtures = seed Marina (seção 14). **Toda tela consome a interface — nunca fixtures direto**
 - [ ] TanStack Query como camada de dados; roteamento com estados de URL (`?batch=`, abas de timeline/settings em rota ou searchParam)
 - [ ] Telas: Login · Dashboard · Upload · Review · Timeline (3 abas) · Biomarkers · BiomarkerDetail · Scores · ScoreDetail · Insights · InsightDetail · Settings (3 abas)
 - [ ] Estados: skeleton loading, vazio (usuário novo: dashboard vira CTA de upload), erro com retry

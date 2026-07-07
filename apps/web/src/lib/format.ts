@@ -1,0 +1,50 @@
+/** Formatting helpers. MVP fixes dates as "DD MMM YYYY" (plan §7, item 3). */
+
+const DATE_FORMAT = new Intl.DateTimeFormat("en-GB", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+});
+
+/** "2026-06-14" → "14 Jun 2026". */
+export function formatDate(iso: string): string {
+  return DATE_FORMAT.format(new Date(`${iso.slice(0, 10)}T12:00:00Z`));
+}
+
+const DATE_SHORT_FORMAT = new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short" });
+const MONTH_FORMAT = new Intl.DateTimeFormat("en-GB", { month: "long" });
+
+/** "2026-06-14" → "14 Jun". */
+export function formatDateShort(iso: string): string {
+  return DATE_SHORT_FORMAT.format(new Date(`${iso.slice(0, 10)}T12:00:00Z`));
+}
+
+/** "2026-01-09" → "January". */
+export function formatMonth(iso: string): string {
+  return MONTH_FORMAT.format(new Date(`${iso.slice(0, 10)}T12:00:00Z`));
+}
+
+const MONTH_SHORT_FORMAT = new Intl.DateTimeFormat("en-GB", { month: "short" });
+
+/** "2025-03-15" → "Mar '25" (trend card axis labels). */
+export function formatMonthYear(iso: string): string {
+  const date = new Date(`${iso.slice(0, 10)}T12:00:00Z`);
+  return `${MONTH_SHORT_FORMAT.format(date)} '${iso.slice(2, 4)}`;
+}
+
+/** Snapshot sequence as the UI shows it: 4 → "04". */
+export function formatSequence(sequence: number): string {
+  return String(sequence).padStart(2, "0");
+}
+
+/** "Snapshot 04 · 14 Jun 2026" — topbar / timeline label. */
+export function snapshotLabel(sequence: number, collectedAt: string): string {
+  return `Snapshot ${formatSequence(sequence)} · ${formatDate(collectedAt)}`;
+}
+
+/** 1834217 → "1.8 MB". */
+export function formatFileSize(bytes: number): string {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}

@@ -11,6 +11,10 @@
   cursor: pointer;
   white-space: nowrap;
 }
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
 
 .primary {
   background: var(--brand);
