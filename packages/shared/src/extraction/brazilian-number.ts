@@ -167,14 +167,15 @@ function brToNumber(token: string): BrConversion {
     // Only dot(s). Could be thousands ("8.610", "197.000") or, in messy data,
     // a decimal. Apply the BR rule: dot = thousands — BUT verify the grouping.
     const parts = t.split(".");
+    const head = parts[0] ?? "";
     const validGrouping =
       parts.length >= 2 &&
-      parts[0].length >= 1 &&
-      parts[0].length <= 3 &&
+      head.length >= 1 &&
+      head.length <= 3 &&
       parts.slice(1).every((p) => p.length === 3);
     if (validGrouping) {
       normalized = parts.join("");
-    } else if (parts.length === 2 && parts[1].length !== 3) {
+    } else if (parts.length === 2 && parts[1]?.length !== 3) {
       // Single dot not forming a thousands group (e.g. "5.2" or "12.34").
       // Under strict BR rules this shouldn't be a decimal, but real reports
       // occasionally emit it. Do NOT guess — flag as ambiguous and take the

@@ -7,7 +7,7 @@
  * catalog stores these; the parser only ever sees the port's narrow slice.
  */
 
-import type { PlausibleMagnitude } from "../parser/magnitude";
+import type { PlausibleMagnitude } from "../extraction/magnitude";
 
 /** The five scoring domains of the MVP. */
 export type HealthDomain =

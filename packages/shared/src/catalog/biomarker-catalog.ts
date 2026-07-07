@@ -13,7 +13,7 @@
  * throws when the catalog is built.
  */
 
-import type { BiomarkerCatalogPort } from "../parser/biomarker-catalog.port";
+import type { BiomarkerCatalogPort } from "../extraction/biomarker-catalog.port";
 import type { BiomarkerDefinition } from "./biomarker.types";
 import { BIOMARKER_SEED } from "./biomarker-catalog.data";
 

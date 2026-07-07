@@ -3,7 +3,7 @@ import {
   biomarkerCatalog,
   createBiomarkerCatalog,
 } from "./biomarker-catalog";
-import { parseMarkerValue } from "../parser/parse-marker-value";
+import { parseMarkerValue } from "../extraction/parse-marker-value";
 import type { BiomarkerDefinition } from "./biomarker.types";
 
 describe("biomarkerCatalog — synonym lookup with varied spellings", () => {

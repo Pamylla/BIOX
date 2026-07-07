@@ -1,0 +1,37 @@
+{
+  "name": "@biox/shared",
+  "version": "0.0.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "BIOX shared core — deterministic extraction, catalog, and engines (framework-agnostic)",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./extraction": {
+      "types": "./dist/extraction/index.d.ts",
+      "default": "./dist/extraction/index.js"
+    },
+    "./catalog": {
+      "types": "./dist/catalog/index.d.ts",
+      "default": "./dist/catalog/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "@types/node": "^20.18.0",
+    "typescript": "^5.6.0",
+    "vitest": "^3.0.0"
+  }
+}
