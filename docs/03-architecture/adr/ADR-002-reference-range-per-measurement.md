@@ -10,11 +10,11 @@ Each lab report carries its own reference range for a biomarker. Ranges differ a
 
 ## Decision
 
-Store the reference range **on each `Measurement`**, exactly as reported, rather than only on the `Biomarker` catalog entry. The catalog may hold a default/canonical range used only for display when a report omits one.
+Store the reference range **on each `Measurement`**, exactly as reported, rather than on the `Biomarker` catalog entry. The catalog never holds ranges: when a report omits a range, the `Measurement` simply has none (a neutral flag) — a range is never invented or backfilled from the catalog.
 
 ## Consequences
 
 - **+** Historical accuracy: every measurement keeps the range it was judged against; classification stays faithful to the source document.
 - **+** Supports honest reading (NFR-05) — the system never retroactively rewrites how a past result was classified.
 - **−** Denormalization: the same range repeats across many measurements of the same biomarker.
-- **−** Catalog and per-measurement ranges can diverge; the UI must be clear about which one it is showing.
+- **−** A report that omits a range yields a `Measurement` with no range (neutral flag); the range is never fabricated — the UI must represent "no range provided" honestly.

@@ -30,7 +30,7 @@ Repository, branch workflow (`main` → `develop` → `feature/*`), README, MIT 
 
 The design that everything else implements.
 
-- **Domain model** ([`02-domain/`](../02-domain/overview.md)) — ubiquitous language and per-entity docs (Patient, Extraction, Batch, Measurement, Biomarker, Score, Insight).
+- **Domain model** ([`02-domain/`](../02-domain/overview.md)) — ubiquitous language and per-entity docs (User, Patient, Extraction, Batch, Measurement, Biomarker, Score, Insight).
 - **Biomarker catalog** — the ~22 markers: canonical names, units, domains, clinical direction, parser synonyms.
 - **Data model** (`03-architecture/data-model.md`) — detailed schemas and design principles (soft-delete, versioning, weight modeling decision), to be realized as a Prisma schema.
 - **Architecture Decision Records** ([`03-architecture/adr/`](../03-architecture/adr/README.md)):

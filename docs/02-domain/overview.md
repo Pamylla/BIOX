@@ -2,7 +2,7 @@
 
 **Document:** `docs/02-domain/overview.md`
 **Purpose:** define the domain language and show how data flows — end to end, without a single line of code.
-**Related:** per-entity documents (`patient.md`, `extraction.md`, `batch.md`, `measurement.md`, `biomarker.md`, `score.md`, `insight.md`).
+**Related:** per-entity documents (`user.md`, `patient.md`, `extraction.md`, `batch.md`, `measurement.md`, `biomarker.md`, `score.md`, `insight.md`).
 
 ---
 
@@ -109,8 +109,8 @@ The path always moves **forward**. The PDF becomes an `Extraction`, which produc
 Not everything in the system is of the same nature. Separating this prevents modeling mistakes — like trying to "save the timeline" (which is a computation, not data).
 
 ### Permanent — stored as truth
-`Patient`, `Extraction`, `Batch`, `Biomarker`, `Measurement`.
-These are the factual record. Once confirmed, they do not change silently (a correction is a new record, a deletion is a soft-delete).
+`User`, `Patient`, `Extraction`, `Batch`, `Biomarker`, `Measurement`.
+These are the factual record (`User` being the identity that owns the clinical data). Once confirmed, they do not change silently (a correction is a new record, a deletion is a soft-delete).
 
 ### Computed — derived from `Measurements` by formula
 `Score`.
@@ -130,7 +130,7 @@ These are *on-demand computations* over `Measurements` and `Batches`. They have 
 
 - **What are the core concepts?** The ones in the glossary above.
 - **How do they relate?** Through the data-flow diagram — always forward.
-- **What is permanent?** Patient, Extraction, Batch, Biomarker, Measurement.
+- **What is permanent?** User, Patient, Extraction, Batch, Biomarker, Measurement.
 - **What is computed?** Score.
 - **What is AI-generated?** Insight.
 - **What is view-only?** Timeline, trend, diff — computations, not entities.
@@ -145,6 +145,6 @@ This document does its job if any person — technical or not — can explain, a
 
 With the language established, each permanent and derived entity gets its own document, following the pattern Purpose / Responsibilities / Relationships / Business rules / Future evolution:
 
-`patient.md` · `extraction.md` · `batch.md` · `measurement.md` · `biomarker.md` · `score.md` · `insight.md`
+`user.md` · `patient.md` · `extraction.md` · `batch.md` · `measurement.md` · `biomarker.md` · `score.md` · `insight.md`
 
 > Note: this list reflects the decision to split "Exam" into `Extraction` + `Batch`. There is no `exam.md`.

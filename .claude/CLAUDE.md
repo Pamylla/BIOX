@@ -2,9 +2,9 @@
 
 # BIOX
 
-A health-intelligence platform that turns laboratory results into an evolving, evidence-based health timeline. Intended stack: TypeScript across a modular frontend and backend (not yet scaffolded).
+A health-intelligence platform that turns laboratory results into an evolving, evidence-based health timeline. Stack: a TypeScript monorepo (npm workspaces) — NestJS backend + Next.js frontend (ADR-007).
 
-> **Status: greenfield.** Only the vision doc at `.biox/project.md` exists — no code, manifest, or tooling yet. Re-run `/optimus:init` once the project is scaffolded to detect the real stack and install formatter hooks, testing/styling/architecture docs, and the test-guardian agent.
+> **Status: early scaffold.** The architecture is decided (ADR-007) and the monorepo is live: `backend/` (NestJS) holds the first module — the `parser` — under a Vitest suite. `frontend/` (Next.js) and the shared-types package are not created yet. Formatter hooks and testing/styling docs are still unprovisioned — run `/optimus:init` (or `/optimus:unit-test`) to add them.
 
 ## Conventions
 
@@ -22,7 +22,10 @@ A health-intelligence platform that turns laboratory results into an evolving, e
 
 ## Commands
 
-No build/test/lint tooling exists yet — add commands here after scaffolding the project.
+Monorepo via npm workspaces (ADR-007): `backend/` (NestJS) is the only workspace so far; `frontend/` (Next.js) + a shared package join later. Root scripts delegate to `backend`.
+- `npm test` — run the test suite once (Vitest)
+- `npm run test:watch` — Vitest in watch mode
+- `npm run typecheck` — `tsc --noEmit` over `backend/`
 
 ## Documentation
 
