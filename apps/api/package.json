@@ -16,6 +16,7 @@
     "prisma:deploy": "prisma migrate deploy"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1080.0",
     "@biox/shared": "workspace:^",
     "@nestjs/common": "^11",
     "@nestjs/core": "^11",

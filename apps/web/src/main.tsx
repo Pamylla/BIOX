@@ -6,7 +6,9 @@ import "./ui/tokens.css";
 import "./ui/base.css";
 import { ApiProvider, MockApiClient } from "./api";
 import { AppLayout } from "./app/AppLayout";
+import { AuthProvider } from "./features/auth/AuthProvider";
 import { LoginScreen } from "./features/auth/LoginScreen";
+import { RequireAuth } from "./features/auth/RequireAuth";
 import { BiomarkerDetailScreen } from "./features/biomarkers/BiomarkerDetailScreen";
 import { BiomarkersScreen } from "./features/biomarkers/BiomarkersScreen";
 import { DashboardScreen } from "./features/dashboard/DashboardScreen";
@@ -26,20 +28,25 @@ const router = createBrowserRouter([
   { path: "/login", element: <LoginScreen /> },
   { path: "/playground", element: <Playground /> },
   {
-    path: "/",
-    element: <AppLayout />,
+    element: <RequireAuth />,
     children: [
-      { index: true, element: <DashboardScreen /> },
-      { path: "timeline", element: <TimelineScreen /> },
-      { path: "biomarkers", element: <BiomarkersScreen /> },
-      { path: "biomarkers/:biomarkerKey", element: <BiomarkerDetailScreen /> },
-      { path: "scores", element: <ScoresScreen /> },
-      { path: "scores/:system", element: <ScoreDetailScreen /> },
-      { path: "insights", element: <InsightsScreen /> },
-      { path: "insights/:insightId", element: <InsightDetailScreen /> },
-      { path: "upload", element: <UploadScreen /> },
-      { path: "review/:extractionId", element: <ReviewScreen /> },
-      { path: "settings", element: <SettingsScreen /> },
+      {
+        path: "/",
+        element: <AppLayout />,
+        children: [
+          { index: true, element: <DashboardScreen /> },
+          { path: "timeline", element: <TimelineScreen /> },
+          { path: "biomarkers", element: <BiomarkersScreen /> },
+          { path: "biomarkers/:biomarkerKey", element: <BiomarkerDetailScreen /> },
+          { path: "scores", element: <ScoresScreen /> },
+          { path: "scores/:system", element: <ScoreDetailScreen /> },
+          { path: "insights", element: <InsightsScreen /> },
+          { path: "insights/:insightId", element: <InsightDetailScreen /> },
+          { path: "upload", element: <UploadScreen /> },
+          { path: "review/:extractionId", element: <ReviewScreen /> },
+          { path: "settings", element: <SettingsScreen /> },
+        ],
+      },
     ],
   },
 ]);
@@ -52,7 +59,9 @@ if (!rootEl) {
 createRoot(rootEl).render(
   <StrictMode>
     <ApiProvider client={apiClient}>
-      <RouterProvider router={router} />
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
     </ApiProvider>
   </StrictMode>,
 );

@@ -8,6 +8,20 @@ export default tseslint.config(
   js.configs.recommended,
   ...tseslint.configs.recommended,
   {
+    rules: {
+      // Allow deliberately-unused args/vars via a leading underscore (e.g. an
+      // interface param an impl ignores, like LocalDiskStorage.put's contentType).
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
+    },
+  },
+  {
     files: ["apps/web/**/*.{ts,tsx}"],
     plugins: { "react-hooks": reactHooks },
     rules: {
