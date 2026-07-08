@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import type { UserProfile } from "@biox/shared/contracts";
 import { useMe } from "../../api";
+import { useAuth } from "../auth/AuthProvider";
 import { formatDate } from "../../lib/format";
 import {
   Avatar,
@@ -182,7 +183,7 @@ function UnitsTab({ user }: { user: UserProfile }) {
 }
 
 function PrivacyTab({ user }: { user: UserProfile }) {
-  const navigate = useNavigate();
+  const { signOut } = useAuth();
   const [aiConsent, setAiConsent] = useState(user.aiProcessingConsent);
 
   // Refresh local consent if the profile refetches with a different value.
@@ -241,8 +242,8 @@ function PrivacyTab({ user }: { user: UserProfile }) {
       </div>
       <div className={styles.foot}>
         <span className={`muted ${styles.footNote}`}>Signed in as {user.name}</span>
-        {/* TODO(phase 3): real Firebase sign-out. */}
-        <Button variant="ghost" onClick={() => navigate("/login")}>
+        {/* Firebase sign-out flips the auth state; RequireAuth redirects to /login. */}
+        <Button variant="ghost" onClick={() => void signOut()}>
           <Icon name="signOut" size={14} />
           Sign out
         </Button>

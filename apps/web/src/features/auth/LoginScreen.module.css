@@ -124,6 +124,16 @@
   margin: 0 0 26px;
 }
 
+.error {
+  margin: 0 0 18px;
+  padding: 10px 13px;
+  border-radius: 10px;
+  background: var(--alert-soft);
+  color: var(--alert);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
 .optionsRow {
   margin: 14px 0 22px;
 }

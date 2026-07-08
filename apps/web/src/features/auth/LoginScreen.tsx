@@ -1,17 +1,38 @@
-import type { FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, type FormEvent } from "react";
+import { Navigate } from "react-router-dom";
 import { Button, Field, Icon, Input, Kicker, Link } from "../../ui";
+import { describeSignInError } from "./auth-errors";
+import { useAuth } from "./AuthProvider";
 import styles from "./LoginScreen.module.css";
 
 export function LoginScreen() {
-  const navigate = useNavigate();
+  const { state, sessionError, signInWithEmail, signInWithGoogle } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // TODO(phase 3): real Firebase auth (email/password + Google) — the mock
-  // stage signs straight into the demo data.
-  const signIn = (event?: FormEvent) => {
-    event?.preventDefault();
-    navigate("/");
+  if (state.status === "signedIn") return <Navigate to="/" replace />;
+
+  const run = async (signIn: () => Promise<void>) => {
+    setError(null);
+    setPending(true);
+    try {
+      await signIn();
+      // Redirect happens via state.status once /v1/auth/session resolves.
+    } catch (caught) {
+      setError(describeSignInError(caught));
+    } finally {
+      setPending(false);
+    }
   };
+
+  const submitEmail = (event: FormEvent) => {
+    event.preventDefault();
+    void run(() => signInWithEmail(email, password));
+  };
+
+  const message = error ?? sessionError;
 
   return (
     <div className={styles.login}>
@@ -65,15 +86,35 @@ export function LoginScreen() {
       </div>
 
       <div className={styles.right}>
-        <form className={styles.card} onSubmit={signIn}>
+        <form className={styles.card} onSubmit={submitEmail}>
           <Kicker className={styles.welcome}>Welcome back</Kicker>
           <h2 className={`disp ${styles.title}`}>Sign in to BIOX</h2>
 
+          {message && (
+            <p className={styles.error} role="alert">
+              {message}
+            </p>
+          )}
+
           <Field label="Email" htmlFor="login-email">
-            <Input id="login-email" type="email" autoComplete="email" />
+            <Input
+              id="login-email"
+              type="email"
+              autoComplete="email"
+              required
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
           </Field>
           <Field label="Password" htmlFor="login-password">
-            <Input id="login-password" type="password" autoComplete="current-password" />
+            <Input
+              id="login-password"
+              type="password"
+              autoComplete="current-password"
+              required
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
           </Field>
 
           <div className={`fx jb ac ${styles.optionsRow}`}>
@@ -81,21 +122,26 @@ export function LoginScreen() {
               <input type="checkbox" defaultChecked />
               Remember me
             </label>
-            <Link title="Password reset arrives with real auth (Phase 3)">Forgot password?</Link>
+            <Link title="Password reset is coming soon">Forgot password?</Link>
           </div>
 
-          <Button type="submit" size="lg" className={styles.w100}>
-            Sign in
+          <Button type="submit" size="lg" className={styles.w100} disabled={pending}>
+            {pending ? "Signing in…" : "Sign in"}
           </Button>
           <div className={styles.ldiv}>or</div>
-          <Button variant="ghost" size="lg" className={styles.w100} onClick={() => signIn()}>
+          <Button
+            variant="ghost"
+            size="lg"
+            className={styles.w100}
+            disabled={pending}
+            onClick={() => void run(signInWithGoogle)}
+          >
             <Icon name="google" size={17} />
             Continue with Google
           </Button>
 
           <p className={`muted ${styles.signup}`}>
-            New to BIOX?{" "}
-            <Link title="Sign-up arrives with real auth (Phase 3)">Create an account</Link>
+            New to BIOX? <Link title="Sign-up is coming soon">Create an account</Link>
           </p>
         </form>
       </div>

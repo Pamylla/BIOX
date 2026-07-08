@@ -548,8 +548,8 @@ Tamanhos: **P** ≈ até 1 dia · **M** ≈ 2–4 dias · **G** ≈ 1 semana+ (r
 - [x] Módulo auth: guard Firebase Admin (verifica ID token), decorator `@CurrentUser`, provisionamento em `POST /v1/auth/session`
 - [x] Módulo users: `GET/PATCH /v1/me`
 - [ ] `packages/shared/catalog`: 20 biomarcadores do design com aliases PT + `plausibleMagnitude` (valores chegam da instância claude.ai — placeholder com TODO até lá)
-- [ ] Storage adapter (interface + impl disco local; impl S3/R2 atrás da mesma interface)
-- [ ] Login real no web: Firebase JS SDK → token → session → rotas protegidas → sign out
+- [x] Storage adapter (interface + impl disco local; impl S3/R2 atrás da mesma interface)
+- [x] Login real no web: Firebase JS SDK → token → session → rotas protegidas → sign out
 
 **Aceite:** login Google e email/senha funcionando de ponta a ponta; `/v1/me` retorna perfil; migrations idempotentes.
 
