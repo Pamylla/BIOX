@@ -219,6 +219,16 @@ describe("biomarkerCatalog — plausibleMagnitude fuses (confirmed + Lote 2 only
     expect(r.needsReview).toBe(false);
   });
 
+  it("groups lab markers under their UI panel and leaves anthropometric markers unpanelled", () => {
+    expect(biomarkerCatalog.findByCode("hemoglobina")?.panelKey).toBe("cbc");
+    expect(biomarkerCatalog.findByCode("ferritina")?.panelKey).toBe("cbc");
+    expect(biomarkerCatalog.findByCode("triglicerideos")?.panelKey).toBe("lipid");
+    expect(biomarkerCatalog.findByCode("hba1c")?.panelKey).toBe("glucose");
+    expect(biomarkerCatalog.findByCode("tsh")?.panelKey).toBe("thyroid");
+    expect(biomarkerCatalog.findByCode("pcr_us")?.panelKey).toBe("inflammation");
+    expect(biomarkerCatalog.findByCode("peso")?.panelKey).toBeUndefined();
+  });
+
   it("does not seed Lote 1/Lote 3 markers (no band could be in the wrong unit)", () => {
     for (const code of [
       "colesterol_total",
