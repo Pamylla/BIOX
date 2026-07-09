@@ -1,6 +1,6 @@
 # ADR-007 — Next.js frontend + NestJS backend, with an in-process extraction worker
 
-- **Status:** Accepted
+- **Status:** Partially superseded by [ADR-009](ADR-009-vite-react-frontend.md) — the frontend framework (Next.js → Vite + React SPA) and workspace layout (`frontend/`/`backend/` → `apps/*` + `packages/shared`); the backend decisions below remain in force
 - **Date:** 2026-07-02
 - **Related:** [ADR-001](ADR-001-postgresql-over-firestore.md) (Postgres), [ADR-006](ADR-006-llm-parser-with-review-modal.md) (parser + async extraction), NFR-06 (async processing), [roadmap.md](../../01-product/roadmap.md)
 
