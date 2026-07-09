@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Extraction" ALTER COLUMN "model" DROP NOT NULL,
+ALTER COLUMN "promptVersion" DROP NOT NULL,
+ALTER COLUMN "rawOutput" DROP NOT NULL;

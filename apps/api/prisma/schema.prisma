@@ -94,12 +94,12 @@ model Extraction {
   reportFileId  String           @unique
   userId        String
   status        ExtractionStatus
-  /// LLM used, e.g. "claude-sonnet-4-6".
-  model         String
-  /// Versioned prompt id, e.g. "extractor-v1".
-  promptVersion String
-  /// Raw LLM response, kept verbatim for auditability.
-  rawOutput     Json
+  /// LLM used, e.g. "claude-sonnet-4-6". Null until the worker runs.
+  model         String?
+  /// Versioned prompt id, e.g. "extractor-v1". Null until the worker runs.
+  promptVersion String?
+  /// Raw LLM response, kept verbatim for auditability. Null until the worker runs.
+  rawOutput     Json?
   /// Collection date detected on the report.
   reportDate    DateTime?
   performingLab String? // ◆

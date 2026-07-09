@@ -18,7 +18,7 @@ A health-intelligence platform that turns laboratory results into an evolving, e
 ## Modules
 
 - **`apps/web`** — features by domain in `src/features/`: auth, dashboard, ingestion, timeline, biomarkers, scores, insights, settings. Design system (`src/ui`), app shell/router (`src/app`), API client layer (`src/api`).
-- **`apps/api`** — NestJS modules in `src/modules/`: auth, users, health, storage today; reports, extractions, batches, measurements, scores, insights, catalog, activity, privacy planned (implementation plan §8).
+- **`apps/api`** — NestJS modules in `src/modules/`: auth, users, health, storage, jobs (pg-boss queue), reports today; extractions, batches, measurements, scores, insights, catalog, activity, privacy planned (implementation plan §8).
 - **`packages/shared`** — deterministic, framework-free code importable by both apps: `contracts/` (zod schemas, the single source of API types), `catalog/` (biomarker catalog), `extraction/` (Brazilian-number parsing, unit conversion, magnitude checks); the flag/score engines land here as pure functions.
 
 ## Commands
