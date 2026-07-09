@@ -23,6 +23,11 @@
       "import": "./dist/catalog/index.js",
       "require": "./dist/catalog/index.cjs"
     },
+    "./engines": {
+      "types": "./dist/engines/index.d.ts",
+      "import": "./dist/engines/index.js",
+      "require": "./dist/engines/index.cjs"
+    },
     "./contracts": {
       "types": "./dist/contracts/index.d.ts",
       "import": "./dist/contracts/index.js",
