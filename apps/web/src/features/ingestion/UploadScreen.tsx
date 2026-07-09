@@ -1,9 +1,20 @@
+import { useRef, useState, type DragEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import type { ReportRow } from "@biox/shared/contracts";
-import { useReports } from "../../api";
+import { useReports, useUploadReport } from "../../api";
 import { formatDate, formatFileSize, formatSequence } from "../../lib/format";
 import { Button, Card, CardTitle, Icon, Kicker, Skeleton, Table, cx } from "../../ui";
 import styles from "./UploadScreen.module.css";
+
+const MAX_REPORT_BYTES = 20 * 1024 * 1024; // mirrors the API's limit (plan §12 Fase 4)
+
+/** Client-side guard so obvious mistakes never reach the server; the API re-checks. */
+function rejectReason(file: File): string | null {
+  const isPdf = file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
+  if (!isPdf) return "Only PDF reports are accepted.";
+  if (file.size > MAX_REPORT_BYTES) return "That file is over the 20 MB limit.";
+  return null;
+}
 
 const STATUS_META: Record<
   ReportRow["extractionStatus"],
@@ -19,13 +30,35 @@ const STATUS_META: Record<
 export function UploadScreen() {
   const navigate = useNavigate();
   const reports = useReports();
+  const upload = useUploadReport();
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [dragging, setDragging] = useState(false);
+  const [rejected, setRejected] = useState<string | null>(null);
 
-  // TODO(phase 4): real dropzone (file input + drag events + POST /v1/reports).
-  // In the mock stage it opens the pending extraction, like the prototype does.
-  const openPendingReview = () => {
-    const pending = reports.data?.find((report) => report.extractionStatus === "needs_review");
-    navigate(pending ? `/review/${pending.extractionId}` : "/upload");
+  const submit = (file: File | undefined) => {
+    setRejected(null);
+    if (!file) return;
+    const reason = rejectReason(file);
+    if (reason) {
+      setRejected(reason);
+      return;
+    }
+    upload.mutate(file, {
+      onSuccess: (result) => navigate(`/review/${result.extractionId}`),
+    });
   };
+
+  const onDrop = (event: DragEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setDragging(false);
+    submit(event.dataTransfer.files[0]);
+  };
+
+  const uploadError = upload.isError
+    ? upload.error instanceof Error
+      ? upload.error.message
+      : "Upload failed."
+    : null;
 
   return (
     <section className="content">
@@ -40,16 +73,41 @@ export function UploadScreen() {
         </div>
       </div>
 
-      <button type="button" className={styles.drop} onClick={openPendingReview}>
+      <input
+        ref={inputRef}
+        type="file"
+        accept="application/pdf"
+        hidden
+        onChange={(event) => submit(event.target.files?.[0])}
+      />
+      <button
+        type="button"
+        className={cx(styles.drop, dragging && styles.dragging)}
+        disabled={upload.isPending}
+        onClick={() => inputRef.current?.click()}
+        onDragOver={(event) => {
+          event.preventDefault();
+          setDragging(true);
+        }}
+        onDragLeave={() => setDragging(false)}
+        onDrop={onDrop}
+      >
         <div className={styles.dropIc}>
           <Icon name="uploadTray" size={30} />
         </div>
-        <div className={styles.dropT}>Drop your lab report here, or click to browse</div>
+        <div className={styles.dropT}>
+          {upload.isPending ? "Uploading…" : "Drop your lab report here, or click to browse"}
+        </div>
         <div className={styles.dropS}>PDF up to 20 MB · your file is parsed, never shared</div>
         <Button size="lg" className={styles.dropBtn} tabIndex={-1}>
           Choose file
         </Button>
       </button>
+      {(rejected ?? uploadError) && (
+        <div className={styles.uploadError} role="alert">
+          {rejected ?? uploadError}
+        </div>
+      )}
 
       <div className="sec-h">
         <CardTitle>Recent uploads</CardTitle>

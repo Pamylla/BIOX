@@ -5,6 +5,8 @@ import type {
   BiomarkerSeries,
   BiomarkersResponse,
   CompareResponse,
+  DiscardExtractionResponse,
+  ExtractionItem,
   ExtractionReview,
   InsightDetail,
   InsightsResponse,
@@ -12,6 +14,8 @@ import type {
   ScoreDetail,
   ScoresResponse,
   SystemKey,
+  UpdateExtractionItem,
+  UploadReportResponse,
   UserProfile,
 } from "@biox/shared/contracts";
 
@@ -39,6 +43,15 @@ export interface ApiClient {
   markInsightRead(insightId: string): Promise<void>;
 
   getActivity(limit?: number): Promise<ActivityEvent[]>;
+
   getReports(): Promise<ReportRow[]>;
+  uploadReport(file: File): Promise<UploadReportResponse>;
+
   getExtraction(extractionId: string): Promise<ExtractionReview>;
+  updateExtractionItem(
+    extractionId: string,
+    itemId: string,
+    patch: UpdateExtractionItem,
+  ): Promise<ExtractionItem>;
+  discardExtraction(extractionId: string): Promise<DiscardExtractionResponse>;
 }

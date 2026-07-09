@@ -27,6 +27,28 @@ export const extractionItemSchema = z.object({
 });
 export type ExtractionItem = z.infer<typeof extractionItemSchema>;
 
+/**
+ * PATCH /v1/extractions/:id/items/:itemId — a reviewer's inline correction.
+ * Every field is optional (a partial patch); applying any of them marks the
+ * item editedByUser. `biomarkerKey` reassigns the marker (null unrecognizes it).
+ */
+export const updateExtractionItemSchema = z
+  .object({
+    biomarkerKey: z.string().nullable(),
+    value: z.number().nullable(),
+    valueQualifier: valueQualifierSchema.nullable(),
+    valueLabel: z.string().nullable(),
+    unit: z.string().nullable(),
+    refLow: z.number().nullable(),
+    refHigh: z.number().nullable(),
+    refRaw: z.string().nullable(),
+  })
+  .partial()
+  .refine((patch) => Object.keys(patch).length > 0, {
+    message: "Provide at least one field to update",
+  });
+export type UpdateExtractionItem = z.infer<typeof updateExtractionItemSchema>;
+
 /** GET /v1/extractions/:id — Review screen payload. */
 export const extractionReviewSchema = z.object({
   id: z.string(),
@@ -45,3 +67,10 @@ export const extractionReviewSchema = z.object({
   }),
 });
 export type ExtractionReview = z.infer<typeof extractionReviewSchema>;
+
+/** POST /v1/extractions/:id/discard — soft-discards the extraction under review. */
+export const discardExtractionResponseSchema = z.object({
+  id: z.string(),
+  status: extractionStatusSchema,
+});
+export type DiscardExtractionResponse = z.infer<typeof discardExtractionResponseSchema>;

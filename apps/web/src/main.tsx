@@ -4,8 +4,9 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./ui/fonts";
 import "./ui/tokens.css";
 import "./ui/base.css";
-import { ApiProvider, MockApiClient } from "./api";
+import { ApiProvider, HttpApiClient, MockApiClient } from "./api";
 import { AppLayout } from "./app/AppLayout";
+import { getFirebaseAuth } from "./lib/firebase";
 import { AuthProvider } from "./features/auth/AuthProvider";
 import { LoginScreen } from "./features/auth/LoginScreen";
 import { RequireAuth } from "./features/auth/RequireAuth";
@@ -22,7 +23,13 @@ import { SettingsScreen } from "./features/settings/SettingsScreen";
 import { TimelineScreen } from "./features/timeline/TimelineScreen";
 import { Playground } from "./playground/Playground";
 
-const apiClient = new MockApiClient();
+// Ingestion (upload + review) runs against the real API; every other screen
+// falls back to the Marina mock until its backend lands (plan Fase 4).
+const apiClient = new HttpApiClient({
+  baseUrl: import.meta.env.VITE_API_URL ?? "http://localhost:3333/v1",
+  getToken: () => getFirebaseAuth().currentUser?.getIdToken() ?? Promise.resolve(null),
+  fallback: new MockApiClient(),
+});
 
 const router = createBrowserRouter([
   { path: "/login", element: <LoginScreen /> },
