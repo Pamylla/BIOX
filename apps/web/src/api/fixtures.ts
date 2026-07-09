@@ -7,6 +7,7 @@ import {
   type ScoreStatus,
   type SystemKey,
 } from "@biox/shared/contracts";
+import { flagMeasurement } from "@biox/shared/engines";
 
 /**
  * Marina Alves demo fixtures (plan §14). Snapshot 04 values are the exact
@@ -320,27 +321,26 @@ export function scoreStatusOf(value: number): ScoreStatus {
 }
 
 /**
- * Mock-local flag rules mirroring §11.1 (numeric two-sided/one-sided ranges,
- * ±5% borderline). The real engine lands in packages/shared/engines with the
- * full qualifier/label handling; the mock only needs the seed's numeric cases.
+ * Runs the shared flag engine (§11.1) over a seed marker and layers the mock's
+ * marker-specific in-range label (design: HDL reads "Protective"), which is a
+ * presentation concern the pure engine leaves out. The seed values are always
+ * numeric with a range, so the engine's qualifier/label paths never apply here.
  */
 export function flagOf(
   value: number,
   marker: Pick<MarkerFixture, "refLow" | "refHigh" | "goodLabel">,
   borderlinePct = 0.05,
 ): { status: FlagStatus; label: string } {
-  const { refLow, refHigh } = marker;
-  if (refLow === null && refHigh === null)
-    return { status: "none", label: "No reference provided" };
-  if (refHigh !== null && value > refHigh) return { status: "alert", label: "Above target" };
-  if (refLow !== null && value < refLow) return { status: "alert", label: "Below range" };
-  if (refHigh !== null && value >= refHigh * (1 - borderlinePct)) {
-    return { status: "watch", label: refLow === null ? "Borderline" : "Upper range" };
+  const result = flagMeasurement({
+    value,
+    refLow: marker.refLow,
+    refHigh: marker.refHigh,
+    borderlinePct,
+  });
+  if (result.status === "good" && marker.goodLabel) {
+    return { status: "good", label: marker.goodLabel };
   }
-  if (refLow !== null && value <= refLow * (1 + borderlinePct)) {
-    return { status: "watch", label: refHigh === null ? "Borderline" : "Lower range" };
-  }
-  return { status: "good", label: marker.goodLabel ?? "In range" };
+  return result;
 }
 
 export function formatValue(value: number, decimals: number): string {

@@ -11,6 +11,7 @@ export default defineConfig({
     "src/extraction/index.ts",
     "src/catalog/index.ts",
     "src/contracts/index.ts",
+    "src/engines/index.ts",
   ],
   format: ["esm", "cjs"],
   dts: true,
