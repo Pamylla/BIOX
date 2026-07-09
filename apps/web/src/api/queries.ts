@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { SystemKey } from "@biox/shared/contracts";
+import type { SystemKey, UpdateExtractionItem } from "@biox/shared/contracts";
 import { useApi } from "./ApiProvider";
 
 /**
@@ -119,5 +119,44 @@ export function useExtraction(extractionId: string) {
   return useQuery({
     queryKey: queryKeys.extraction(extractionId),
     queryFn: () => api.getExtraction(extractionId),
+    // While the worker runs, poll until the extraction leaves `processing`.
+    refetchInterval: (query) => (query.state.data?.status === "processing" ? 2_000 : false),
+  });
+}
+
+/** Uploads a PDF; the caller navigates to review once the extraction id comes back. */
+export function useUploadReport() {
+  const api = useApi();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (file: File) => api.uploadReport(file),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: queryKeys.reports });
+    },
+  });
+}
+
+/** Persists an inline correction and refreshes the extraction under review. */
+export function useUpdateExtractionItem(extractionId: string) {
+  const api = useApi();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ itemId, patch }: { itemId: string; patch: UpdateExtractionItem }) =>
+      api.updateExtractionItem(extractionId, itemId, patch),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: queryKeys.extraction(extractionId) });
+    },
+  });
+}
+
+/** Soft-discards the extraction; the caller leaves the review screen on success. */
+export function useDiscardExtraction() {
+  const api = useApi();
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (extractionId: string) => api.discardExtraction(extractionId),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: queryKeys.reports });
+    },
   });
 }

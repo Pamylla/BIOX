@@ -8,6 +8,8 @@ import type {
   BiomarkerTrend,
   BiomarkersResponse,
   CompareResponse,
+  DiscardExtractionResponse,
+  ExtractionItem,
   ExtractionReview,
   FlagStatus,
   InsightDetail,
@@ -20,6 +22,8 @@ import type {
   ScoreDetail,
   ScoresResponse,
   SystemKey,
+  UpdateExtractionItem,
+  UploadReportResponse,
   UserProfile,
 } from "@biox/shared/contracts";
 import { panelKeySchema } from "@biox/shared/contracts";
@@ -313,6 +317,15 @@ export class MockApiClient implements ApiClient {
     return REPORT_FIXTURES.map((report) => ({ ...report }));
   }
 
+  async uploadReport(_file: File): Promise<UploadReportResponse> {
+    await sleep(LATENCY_MS);
+    return {
+      reportId: "report-05",
+      extractionId: EXTRACTION_REVIEW_FIXTURE.id,
+      status: "needs_review",
+    };
+  }
+
   async getExtraction(extractionId: string): Promise<ExtractionReview> {
     await sleep(LATENCY_MS);
     if (extractionId !== EXTRACTION_REVIEW_FIXTURE.id) {
@@ -342,6 +355,29 @@ export class MockApiClient implements ApiClient {
         toCheck: items.filter((item) => item.confidence !== "high").length,
       },
     };
+  }
+
+  async updateExtractionItem(
+    _extractionId: string,
+    itemId: string,
+    patch: UpdateExtractionItem,
+  ): Promise<ExtractionItem> {
+    await sleep(LATENCY_MS);
+    const item = EXTRACTION_REVIEW_FIXTURE.items.find((candidate) => candidate.id === itemId);
+    if (!item) throw new Error(`Unknown extraction item: ${itemId}`);
+    const merged = { ...item, ...patch };
+    const marker = MARKER_FIXTURES.find((candidate) => candidate.key === merged.biomarkerKey);
+    return {
+      ...merged,
+      displayName: marker?.name ?? null,
+      panelKey: marker?.panel ?? null,
+      editedByUser: true,
+    };
+  }
+
+  async discardExtraction(extractionId: string): Promise<DiscardExtractionResponse> {
+    await sleep(LATENCY_MS);
+    return { id: extractionId, status: "discarded" };
   }
 
   // --- private derivations -------------------------------------------------
