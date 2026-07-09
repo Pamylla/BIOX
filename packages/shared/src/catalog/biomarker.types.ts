@@ -7,6 +7,7 @@
  * catalog stores these; the parser only ever sees the port's narrow slice.
  */
 
+import type { PanelKey } from "../contracts/enums";
 import type { PlausibleMagnitude } from "../extraction/magnitude";
 
 /** The five scoring domains of the MVP. */
@@ -29,6 +30,13 @@ export interface BiomarkerDefinition {
   primaryDomain: HealthDomain | null;
   /** Domains where the marker is interpretive context only — it does not score. */
   secondaryDomains: HealthDomain[];
+  /**
+   * The UI panel this marker is grouped under on the review/biomarker screens.
+   * Structural presentation metadata (not clinical reference data), so it is set
+   * here rather than awaited from clinical sign-off. Omitted for anthropometric
+   * markers, which have no lab panel.
+   */
+  panelKey?: PanelKey;
   /** The sense of the reading. */
   direction: Direction;
   /** Laboratory (from a report) or anthropometric (manual entry). */
