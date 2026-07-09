@@ -17,5 +17,6 @@ Statuses: **Proposed** (under discussion) · **Accepted** (in force) · **Supers
 | [ADR-004](ADR-004-no-rag-in-mvp.md) | No RAG in the MVP — curated knowledge in context | Accepted |
 | [ADR-005](ADR-005-insight-does-not-feed-score.md) | Insights never feed the score | Accepted |
 | [ADR-006](ADR-006-llm-parser-with-review-modal.md) | LLM-assisted parser with a human review modal | Accepted |
-| [ADR-007](ADR-007-backend-architecture.md) | Next.js frontend + NestJS backend, in-process extraction worker | Accepted |
+| [ADR-007](ADR-007-backend-architecture.md) | Next.js frontend + NestJS backend, in-process extraction worker | Partially superseded (ADR-009) |
 | [ADR-008](ADR-008-llm-provider.md) | LLM provider: OpenRouter vs Ollama | Proposed |
+| [ADR-009](ADR-009-vite-react-frontend.md) | Vite + React SPA frontend in a pnpm workspaces monorepo | Accepted |
