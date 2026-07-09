@@ -4,7 +4,7 @@
 
 A health-intelligence platform that turns laboratory results into an evolving, evidence-based health timeline. Stack: a TypeScript monorepo (pnpm workspaces) — NestJS API + Vite/React web app + a framework-free shared package (see `docs/implementation-plan.md` §8).
 
-> **Status: MVP build in progress**, phase by phase per `docs/implementation-plan.md`. Three workspaces are live: `apps/api` (NestJS — `auth`, `users`, `health` modules so far; Prisma + Postgres via `docker-compose.yml`), `apps/web` (Vite + React + React Router — design system in `src/ui`, app shell in `src/app`, feature scaffolds in `src/features`), and `packages/shared` (zod contracts, biomarker catalog, extraction utilities). Formatter hooks (husky + lint-staged) are provisioned; testing/styling docs are still missing — run `/optimus:unit-test` to add them.
+> **Status: MVP build in progress**, phase by phase per `docs/implementation-plan.md`. Three workspaces are live: `apps/api` (NestJS — `auth`, `users`, `health`, `storage` modules so far; Prisma + Postgres via `docker-compose.yml`), `apps/web` (Vite + React + React Router — design system in `src/ui`, app shell in `src/app`, feature scaffolds in `src/features`), and `packages/shared` (zod contracts, biomarker catalog, extraction utilities). Formatter hooks (husky + lint-staged) are provisioned; testing/styling docs are still missing — run `/optimus:unit-test` to add them.
 
 ## Conventions
 
@@ -18,7 +18,7 @@ A health-intelligence platform that turns laboratory results into an evolving, e
 ## Modules
 
 - **`apps/web`** — features by domain in `src/features/`: auth, dashboard, ingestion, timeline, biomarkers, scores, insights, settings. Design system (`src/ui`), app shell/router (`src/app`), API client layer (`src/api`).
-- **`apps/api`** — NestJS modules in `src/modules/`: auth, users, health today; reports, extractions, batches, measurements, scores, insights, catalog, activity, privacy planned (implementation plan §8).
+- **`apps/api`** — NestJS modules in `src/modules/`: auth, users, health, storage today; reports, extractions, batches, measurements, scores, insights, catalog, activity, privacy planned (implementation plan §8).
 - **`packages/shared`** — deterministic, framework-free code importable by both apps: `contracts/` (zod schemas, the single source of API types), `catalog/` (biomarker catalog), `extraction/` (Brazilian-number parsing, unit conversion, magnitude checks); the flag/score engines land here as pure functions.
 
 ## Commands
