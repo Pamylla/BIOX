@@ -13,3 +13,11 @@ export const reportRowSchema = z.object({
   batchSequence: z.number().int().nullable(),
 });
 export type ReportRow = z.infer<typeof reportRowSchema>;
+
+/** POST /v1/reports — upload accepted; the UI polls the extraction until it leaves `processing`. */
+export const uploadReportResponseSchema = z.object({
+  reportId: z.string(),
+  extractionId: z.string(),
+  status: extractionStatusSchema,
+});
+export type UploadReportResponse = z.infer<typeof uploadReportResponseSchema>;
