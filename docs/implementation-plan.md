@@ -556,7 +556,7 @@ Tamanhos: **P** ≈ até 1 dia · **M** ≈ 2–4 dias · **G** ≈ 1 semana+ (r
 ### Fase 4 — Pipeline de ingestão [G]
 
 - [x] `POST /v1/reports`: multipart, validação (pdf, ≤ 20 MB), grava storage + ReportFile, publica `extraction.run`
-- [ ] Worker conforme 11.3 (Anthropic + validação zod + brazilian-number + resolução de aliases + plausibleMagnitude)
+- [x] Worker conforme 11.3 (Anthropic + validação zod + brazilian-number + resolução de aliases + plausibleMagnitude) *(prompt/schema v0 placeholder até o prompt v1 da instância claude.ai — §16)*
 - [ ] Endpoints de review: GET extraction, PATCH item, confirm (transação completa 11.3), discard
 - [x] UI Review ligada à API real: polling/refetch do status `processing → needs_review`, edição inline, contadores do header computados *(confirm desabilitado até o score engine — Fase 5)*
 - [x] UI Upload: dropzone real (input file + drag), progress, tabela de recentes via API

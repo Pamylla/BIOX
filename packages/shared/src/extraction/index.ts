@@ -8,3 +8,4 @@ export * from "./magnitude";
 export * from "./unit-conversion";
 export * from "./biomarker-catalog.port";
 export * from "./parse-marker-value";
+export * from "./extractor-output";
