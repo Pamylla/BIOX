@@ -17,4 +17,15 @@ export const JOB_NAMES = ["extraction.run"] as const satisfies readonly JobName[
  */
 export abstract class JobQueuePort {
   abstract publish<Name extends JobName>(name: Name, payload: JobPayloads[Name]): Promise<void>;
+
+  /**
+   * Register the in-process worker for a job (plan §11.3). Safe to call from
+   * any module's init hook: registration is deferred until the queue is up.
+   * Handlers own their failure handling — a rejected handler must not requeue
+   * the job, because pipeline retries are manual (§11.3 step 8).
+   */
+  abstract subscribe<Name extends JobName>(
+    name: Name,
+    handler: (payload: JobPayloads[Name]) => Promise<void>,
+  ): void;
 }
